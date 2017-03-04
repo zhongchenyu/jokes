@@ -22,6 +22,10 @@ public class MainPresenter extends RxPresenter<MainActivity> {
 
   @Override protected void onCreate(Bundle savedState){
     super.onCreate(savedState);
+    start();
+  }
+
+  public void start() {
     App.getServerAPI()
         .getJokes(api_key, sort,page,pagesize,time)
         .observeOn(AndroidSchedulers.mainThread())

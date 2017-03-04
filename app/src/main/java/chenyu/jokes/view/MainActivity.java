@@ -1,6 +1,7 @@
 package chenyu.jokes.view;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import nucleus.view.NucleusActivity;
 @RequiresPresenter(MainPresenter.class)
 public class MainActivity extends NucleusActivity<MainPresenter> {
   @BindView(R.id.recyclerView) public RecyclerView recyclerView;
+  @BindView(R.id.refreshLayout) public SwipeRefreshLayout refreshLayout;
   private JokeAdapter  jokeAdapter = new JokeAdapter();
 
   @Override
@@ -29,6 +31,14 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(jokeAdapter);
+
+    refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+    refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        getPresenter().start();
+        refreshLayout.setRefreshing(false);
+      }
+    });
   }
 
   public void onItemsNext(List<Joke> items) {

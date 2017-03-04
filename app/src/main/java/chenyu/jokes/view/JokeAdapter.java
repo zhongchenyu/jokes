@@ -34,8 +34,8 @@ public class JokeAdapter extends RecyclerView.Adapter<JokeViewHolder> {
   }
 
   @Override public void onBindViewHolder(JokeViewHolder holder, int position){
-    holder.content.setText(mJokes.get(position).content);
-    holder.time.setText(mJokes.get(position).updatetime);
+    holder.content.setText(mJokes.get(position).getContent());
+    holder.time.setText(mJokes.get(position).updatetime + " "+position);
   }
 
   @Override public int getItemCount() {
@@ -44,5 +44,9 @@ public class JokeAdapter extends RecyclerView.Adapter<JokeViewHolder> {
 
   public void addAll(List<Joke> jokes) {
     mJokes.addAll(jokes);
+  }
+
+  public void clear() {
+    mJokes.clear();
   }
 }

@@ -16,16 +16,16 @@ import rx.functions.Action1;
 public class MainPresenter extends RxPresenter<MainActivity> {
   String api_key = ServerAPI.API_KEY;
   String sort = "desc";
-  int page = 1;
+
   int pagesize = 20;
   String time = String.valueOf(System.currentTimeMillis()/1000);//"1418816972";
 
   @Override protected void onCreate(Bundle savedState){
     super.onCreate(savedState);
-    start();
+    start(1);
   }
 
-  public void start() {
+  public void start(int page) {
     App.getServerAPI()
         .getJokes(api_key, sort,page,pagesize,time)
         .observeOn(AndroidSchedulers.mainThread())

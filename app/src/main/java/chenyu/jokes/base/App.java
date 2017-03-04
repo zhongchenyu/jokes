@@ -25,7 +25,6 @@ public class App extends Application {
         })
         .build()
         .create(ServerAPI.class);
-Log.d("APP",serverAPI.toString());
   }
   public static ServerAPI getServerAPI() {
     return serverAPI;

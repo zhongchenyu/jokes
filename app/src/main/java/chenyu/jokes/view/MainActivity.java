@@ -17,9 +17,7 @@ import nucleus.view.NucleusActivity;
 
 @RequiresPresenter(MainPresenter.class)
 public class MainActivity extends NucleusActivity<MainPresenter> {
-  @BindView(R.id.listView) public ListView listView;
   @BindView(R.id.recyclerView) public RecyclerView recyclerView;
-  private ArrayAdapter<Joke> listAdapter;
   private JokeAdapter  jokeAdapter = new JokeAdapter();
 
   @Override
@@ -27,7 +25,6 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-    listView.setAdapter(listAdapter = new ArrayAdapter<>(this, R.layout.item));
 
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
@@ -35,8 +32,6 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
   }
 
   public void onItemsNext(List<Joke> items) {
-    listAdapter.clear();
-    listAdapter.addAll(items);
     jokeAdapter.addAll(items);
   }
 

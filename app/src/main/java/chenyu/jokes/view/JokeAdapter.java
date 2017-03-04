@@ -1,24 +1,23 @@
 package chenyu.jokes.view;
 
-import android.content.ClipData;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import chenyu.jokes.R;
-import chenyu.jokes.model.Item;
+import chenyu.jokes.model.Joke;
+import java.util.ArrayList;
 import java.util.List;
-import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 /**
  * Created by chenyu on 2017/3/3.
  */
 
 public class JokeAdapter extends RecyclerView.Adapter<JokeViewHolder> {
-  private Item[] mJokes;
+  private List<Joke> mJokes = new ArrayList<>();
 
-  public JokeAdapter(Item[] jokes) {
+  public JokeAdapter(List<Joke> jokes) {
     mJokes = jokes;
   }
 
@@ -35,17 +34,15 @@ public class JokeAdapter extends RecyclerView.Adapter<JokeViewHolder> {
   }
 
   @Override public void onBindViewHolder(JokeViewHolder holder, int position){
-    Log.d("recycler",position+":  "+mJokes[position].content);
-    holder.content.setText(mJokes[position].content);
-    holder.time.setText(mJokes[position].updatetime);
+    holder.content.setText(mJokes.get(position).content);
+    holder.time.setText(mJokes.get(position).updatetime);
   }
 
   @Override public int getItemCount() {
-    return mJokes.length;
+    return mJokes.size();
   }
 
-  public void add(Item[] jokes) {
-    mJokes = jokes;
-    Log.d("recycler item length",String.valueOf(mJokes.length));
+  public void addAll(List<Joke> jokes) {
+    mJokes.addAll(jokes);
   }
 }

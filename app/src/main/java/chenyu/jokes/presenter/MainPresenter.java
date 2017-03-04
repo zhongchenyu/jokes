@@ -28,7 +28,7 @@ public class MainPresenter extends RxPresenter<MainActivity> {
         .compose(this.<Response>deliverLatestCache())
         .subscribe(new Action1<Response> () {
           @Override public void call(Response response) {
-            getView().onItemsNext(response.data.items);
+            getView().onItemsNext(response.data.jokes);
           }
         },new Action1<Throwable>() {
           @Override public void call(Throwable throwable) {

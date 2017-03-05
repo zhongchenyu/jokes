@@ -23,7 +23,7 @@ import nucleus.view.NucleusAppCompatActivity;
 public class MainActivity extends NucleusAppCompatActivity<MainPresenter> {
   @BindView(R.id.recyclerView) public RecyclerView recyclerView;
   @BindView(R.id.refreshLayout) public SwipeRefreshLayout refreshLayout;
-  //@BindView(R.id.toolBar) public Toolbar toolbar;
+  @BindView(R.id.toolBar) public Toolbar toolbar;
   private JokeAdapter  jokeAdapter = new JokeAdapter();
   private int currentPage = 1;
   private int previousTotal = 0;
@@ -35,7 +35,9 @@ public class MainActivity extends NucleusAppCompatActivity<MainPresenter> {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    //setSupportActionBar(toolbar);
+    toolbar.setNavigationIcon(R.drawable.ic_32);
+    toolbar.setTitle("");
+    setSupportActionBar(toolbar);
 
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);

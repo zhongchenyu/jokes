@@ -10,14 +10,14 @@ import rx.Observable;
  */
 
 public interface ServerAPI {
-  public static final String ENDPOINT = "http://***REMOVED***/joke";
-  public static final String API_KEY = "***REMOVED***";
 
-  @GET("/content/list.from") Observable<Response> getJokes(
-      @Query("key") String api_key,
-      @Query("sort") String sort,
-      @Query("page") int page,
-      @Query("pagesize") int pagesize,
-      @Query("time") String time
+public static final String ENDPOINT = "http://119.23.13.228";
+
+  @GET("/") Observable<Response> getJokes(
+      //@Query("key") String api_key,
+      //@Query("sort") String sort,
+      @Query("page") int page
+      //@Query("pagesize") int pagesize,
+      //@Query("time") String time
   );
 }

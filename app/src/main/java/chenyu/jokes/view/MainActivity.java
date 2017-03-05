@@ -23,6 +23,9 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
   @BindView(R.id.refreshLayout) public SwipeRefreshLayout refreshLayout;
   private JokeAdapter  jokeAdapter = new JokeAdapter();
   private int currentPage = 1;
+  private int previousTotal = 0;
+  private boolean loading = true;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -48,11 +51,11 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-        boolean loading = true;
+
         int visibleItemCount = recyclerView.getChildCount();
         int totalItemCount = recyclerView.getAdapter().getItemCount();
         int firstVisibleItem =( (LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        int previousTotal = 0;
+
 
         if(loading) {
           if(totalItemCount > previousTotal) {
@@ -65,6 +68,7 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
           //load more
           loading = true;
           onLoadMore();
+
           Log.d("scroll","to the end, loading "+currentPage);
         }
       }
@@ -75,7 +79,7 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
   public void onItemsNext(List<Joke> items) {
     jokeAdapter.addAll(items);
     jokeAdapter.notifyDataSetChanged();
-
+    loading = false;
     Log.d("After load", "count is "+jokeAdapter.getItemCount());
   }
 

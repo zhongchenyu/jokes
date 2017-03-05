@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -14,13 +15,15 @@ import chenyu.jokes.R;
 import chenyu.jokes.model.Joke;
 import chenyu.jokes.presenter.MainPresenter;
 import java.util.List;
-import nucleus.manager.RequiresPresenter;
+import nucleus.factory.RequiresPresenter;
 import nucleus.view.NucleusActivity;
+import nucleus.view.NucleusAppCompatActivity;
 
 @RequiresPresenter(MainPresenter.class)
-public class MainActivity extends NucleusActivity<MainPresenter> {
+public class MainActivity extends NucleusAppCompatActivity<MainPresenter> {
   @BindView(R.id.recyclerView) public RecyclerView recyclerView;
   @BindView(R.id.refreshLayout) public SwipeRefreshLayout refreshLayout;
+  //@BindView(R.id.toolBar) public Toolbar toolbar;
   private JokeAdapter  jokeAdapter = new JokeAdapter();
   private int currentPage = 1;
   private int previousTotal = 0;
@@ -32,6 +35,8 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
+    //setSupportActionBar(toolbar);
+
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(jokeAdapter);
@@ -42,6 +47,7 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
         jokeAdapter.clear();
         getPresenter().start(1);
         currentPage = 1;
+        previousTotal = 0;
         jokeAdapter.notifyDataSetChanged();
         refreshLayout.setRefreshing(false);
         Log.d("After Refresh", "count is "+jokeAdapter.getItemCount());
@@ -56,20 +62,21 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
         int totalItemCount = recyclerView.getAdapter().getItemCount();
         int firstVisibleItem =( (LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
-
+        //Log.d("Scroll_if1","Loading="+loading+", "+"total="+totalItemCount+", "+"previous="+previousTotal);
         if(loading) {
           if(totalItemCount > previousTotal) {
             loading = false;
             previousTotal = totalItemCount;
           }
         }
+        //Log.d("Scroll_if2","Loading="+loading+", "+"total="+totalItemCount+", "+"previous="+previousTotal);
         if(!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem) {
 
-          //load more
           loading = true;
+          currentPage ++;
           onLoadMore();
-
-          Log.d("scroll","to the end, loading "+currentPage);
+          previousTotal = totalItemCount;
+        //  Log.d("scroll","to the end, loading "+currentPage);
         }
       }
     });
@@ -88,7 +95,6 @@ public class MainActivity extends NucleusActivity<MainPresenter> {
   }
 
   public void onLoadMore(){
-    currentPage ++;
-    getPresenter().start(currentPage);
+    getPresenter().request(currentPage);
   }
 }

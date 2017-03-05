@@ -89,6 +89,11 @@ public class MainActivity extends NucleusAppCompatActivity<MainPresenter> {
     jokeAdapter.addAll(items);
     jokeAdapter.notifyDataSetChanged();
     loading = false;
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      return;
+    }
     Log.d("After load", "count is "+jokeAdapter.getItemCount());
   }
 

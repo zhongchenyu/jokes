@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+  <tab id="@+id/tabJoke"
+    title="笑话"/>
+  <tab id="@+id/tabFunPic"
+    title="趣图"/>
+  <!--tab id="@+id/tabCourseTimetable"
+      icon="@drawable/ic_action_course_timetable" title="@string/tab_course_timetable"/-->
+
+</tabs>

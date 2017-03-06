@@ -2,7 +2,7 @@ package chenyu.jokes.presenter;
 
 import android.os.Bundle;
 import android.util.Log;
-import chenyu.jokes.view.MainActivity;
+import chenyu.jokes.view.Joke.JokeFragment;
 import chenyu.jokes.base.App;
 import chenyu.jokes.model.Response;
 import nucleus.presenter.RxPresenter;
@@ -16,7 +16,7 @@ import static rx.android.schedulers.AndroidSchedulers.mainThread;
  * Created by chenyu on 2017/3/3.
  */
 
-public class MainPresenter extends RxPresenter<MainActivity> {
+public class JokePresenter extends RxPresenter<JokeFragment> {
   private int mPage = 1;
   //String sort = "desc";
 
@@ -44,25 +44,25 @@ public class MainPresenter extends RxPresenter<MainActivity> {
         (MainActivity activity, Throwable throwable) -> activity.onItemsError(throwable));
    */
 
-    restartableLatestCache(1,
+    restartableFirst(1,
         new Func0<Observable<Response>>() {
           @Override public Observable<Response> call() {
             return App.getServerAPI().getJokes(mPage).observeOn(mainThread());
           }
         },
-        new Action2<MainActivity, Response>() {
-          @Override public void call(MainActivity mainActivity, Response response) {
+        new Action2<JokeFragment, Response>() {
+          @Override public void call(JokeFragment jokeFragment, Response response) {
             Log.d("Presenter: ",response.data.jokes.size()+" ");
-            mainActivity.onItemsNext(response.data.jokes);
+            jokeFragment.onItemsNext(response.data.jokes);
           }
         },
-        new Action2<MainActivity, Throwable>() {
-          @Override public void call(MainActivity mainActivity, Throwable throwable) {
-            mainActivity.onItemsError(throwable);
+        new Action2<JokeFragment, Throwable>() {
+          @Override public void call(JokeFragment jokeFragment, Throwable throwable) {
+            jokeFragment.onItemsError(throwable);
           }
         }
     );
-
+Log.d("Presenter: ","onCreate");
     request(1);
   }
 

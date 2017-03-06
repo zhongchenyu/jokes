@@ -1,4 +1,4 @@
-package chenyu.jokes.view;
+package chenyu.jokes.view.Joke;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

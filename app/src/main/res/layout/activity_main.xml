@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
   <android.support.v7.widget.Toolbar android:id="@+id/toolBar"
       android:layout_width="match_parent" android:layout_height="wrap_content"
-      android:background="@color/baseColor" android:title="">
+      android:background="@color/colorPrimary" android:title="">
     <TextView
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="@string/app_name" android:textColor="@android:color/white"

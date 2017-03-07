@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
+import chenyu.jokes.view.Joke.JokeAdapter;
 import chenyu.jokes.view.Joke.JokeFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -25,7 +26,8 @@ public class MainActivity extends NucleusAppCompatActivity {
   @BindView(R.id.bottomBar) public BottomBar mBottomBar;
   private FragmentManager fragmentManager;
 
-  //private FragmentTransaction transaction;
+
+  //private JokeAdapter jokeAdapter = new JokeAdapter();
 
   JokeFragment jokeFragment = JokeFragment.create();
   TestTabSwitchFragment testTabSwitchFragment = TestTabSwitchFragment.newInstance();

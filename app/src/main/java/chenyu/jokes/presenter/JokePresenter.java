@@ -2,6 +2,7 @@ package chenyu.jokes.presenter;
 
 import android.os.Bundle;
 import android.util.Log;
+import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.view.Joke.JokeFragment;
 import chenyu.jokes.base.App;
 import chenyu.jokes.model.Response;
@@ -16,7 +17,7 @@ import static rx.android.schedulers.AndroidSchedulers.mainThread;
  * Created by chenyu on 2017/3/3.
  */
 
-public class JokePresenter extends RxPresenter<JokeFragment> {
+public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
   private int mPage = 1;
   //String sort = "desc";
 
@@ -66,7 +67,7 @@ Log.d("Presenter: ","onCreate");
     request(1);
   }
 
-  public void request(int page) {
+  @Override  public void request(int page) {
     mPage = page;
     start(1);
   }

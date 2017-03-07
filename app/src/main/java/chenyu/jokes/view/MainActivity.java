@@ -1,18 +1,14 @@
 package chenyu.jokes.view;
 
-
-
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
-import chenyu.jokes.view.Joke.JokeAdapter;
 import chenyu.jokes.view.Joke.JokeFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -25,9 +21,6 @@ public class MainActivity extends NucleusAppCompatActivity {
   @BindView(R.id.toolBar) public Toolbar toolbar;
   @BindView(R.id.bottomBar) public BottomBar mBottomBar;
   private FragmentManager fragmentManager;
-
-
-  //private JokeAdapter jokeAdapter = new JokeAdapter();
 
   JokeFragment jokeFragment = JokeFragment.create();
   TestTabSwitchFragment testTabSwitchFragment = TestTabSwitchFragment.newInstance();

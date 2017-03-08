@@ -38,6 +38,7 @@ public  class BaseScrollFragment<Adapter extends BaseScrollAdapter,P extends Bas
 
 public void setAdapter(Adapter adapter) {
   mAdapter = adapter;
+  Log.d("BaseScrollFragment","setAdapter: "+mAdapter.toString());
 }
   public static BaseScrollFragment create(BaseScrollAdapter adapter) {
     BaseScrollFragment baseScrollFragment = new BaseScrollFragment();
@@ -68,14 +69,19 @@ public void setAdapter(Adapter adapter) {
   @Override public void onViewCreated(View view,Bundle state) {
     super.onViewCreated(view,state);
     ButterKnife.bind(this,view);
+    recyclerView.setAdapter(mAdapter);
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    recyclerView.setLayoutManager(layoutManager);
+    Log.d("BaseScrollFragment","recyclerView.setAdapter: "+mAdapter.toString());
+
+
   }
 
   @Override public void onResume() {
     super.onResume();
-    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-    recyclerView.setLayoutManager(layoutManager);
+
     //mAdapter = new Adapter();
-    recyclerView.setAdapter(mAdapter);
+
 
     refreshLayout.setColorSchemeResources(R.color.colorPrimary);
     refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

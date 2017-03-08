@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
+import chenyu.jokes.view.FunPic.FunPicFragment;
 import chenyu.jokes.view.Joke.JokeFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -23,7 +24,8 @@ public class MainActivity extends NucleusAppCompatActivity {
   private FragmentManager fragmentManager;
 
   JokeFragment jokeFragment = JokeFragment.create();
-  TestTabSwitchFragment testTabSwitchFragment = TestTabSwitchFragment.newInstance();
+  FunPicFragment funPicFragment = FunPicFragment.create();
+  //TestTabSwitchFragment testTabSwitchFragment = TestTabSwitchFragment.newInstance();
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -36,8 +38,8 @@ public class MainActivity extends NucleusAppCompatActivity {
 
     fragmentManager = getSupportFragmentManager();
 
-    addFragment(testTabSwitchFragment);
-    hideFragment(testTabSwitchFragment);
+    addFragment(funPicFragment);
+    hideFragment(funPicFragment);
     addFragment(jokeFragment);
 
     mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -46,10 +48,10 @@ public class MainActivity extends NucleusAppCompatActivity {
         switch (tabId) {
           case R.id.tabJoke:
             showFragment(jokeFragment);
-            hideFragment(testTabSwitchFragment);
+            hideFragment(funPicFragment);
             break;
           case R.id.tabFunPic:
-            showFragment(testTabSwitchFragment);
+            showFragment(funPicFragment);
             hideFragment(jokeFragment);
             break;
         }

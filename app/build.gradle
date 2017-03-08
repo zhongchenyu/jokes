@@ -19,6 +19,16 @@ android {
   }
 }
 
+android {
+  // Fixed build error : Duplicate files copied in APK META-INF/LICENSE.txt
+  packagingOptions {
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/NOTICE.txt'
+    exclude 'META-INF/LICENSE.txt'
+  }
+}
 dependencies {
   compile fileTree(include: ['*.jar'], dir: 'libs')
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -26,7 +36,9 @@ dependencies {
   })
   compile 'com.android.support:appcompat-v7:25.2.0'
   testCompile 'junit:junit:4.12'
-  compile 'com.squareup.retrofit:retrofit:1.9.0'
+  compile 'com.squareup.retrofit2:retrofit:2.2.0'
+  compile 'com.squareup.retrofit2:converter-jackson:2.2.0'
+  compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
   compile 'io.reactivex:rxjava:1.0.8'
   compile 'io.reactivex:rxandroid:0.24.0'
   compile 'info.android15.nucleus:nucleus:4.0.0'
@@ -40,4 +52,8 @@ dependencies {
   compile 'com.roughike:bottom-bar:2.1.1'
   compile 'org.parceler:parceler-api:1.1.5'
   apt 'org.parceler:parceler:1.1.5'
+  compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+  compile 'com.squareup.picasso:picasso:2.5.2'
+  compile 'com.facebook.fresco:fresco:1.1.0'
+  compile 'com.github.bumptech.glide:glide:3.7.0'
 }

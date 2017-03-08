@@ -4,13 +4,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollAdapter;
+import chenyu.jokes.model.Data;
 import chenyu.jokes.model.Joke;
 
 /**
  * Created by chenyu on 2017/3/3.
  */
 
-public class JokeAdapter extends BaseScrollAdapter<Joke> {
+public class JokeAdapter extends BaseScrollAdapter<Data> {
 
   @BindView(R.id.content) public TextView content;
   @BindView(R.id.time) public TextView time;
@@ -27,8 +28,8 @@ public class JokeAdapter extends BaseScrollAdapter<Joke> {
 
   @Override public void onBindViewHolder(ViewHolder holder, int position){
    super.onBindViewHolder(holder,position);
-    content.setText(mItems.get(position).getContent());
-    time.setText(mItems.get(position).updatetime + " "+position);
+    content.setText(mItems.get(position).content);
+    time.setText(mItems.get(position).time + " "+position);
   }
 
 }

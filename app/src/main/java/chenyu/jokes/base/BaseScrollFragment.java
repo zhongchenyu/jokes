@@ -81,7 +81,7 @@ public void setAdapter(Adapter adapter) {
     refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
         mAdapter.clear();
-        getPresenter().start(1);
+        getPresenter().request(1);
         currentPage = 1;
         previousTotal = 0;
         mAdapter.notifyDataSetChanged();

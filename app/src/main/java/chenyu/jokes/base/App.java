@@ -2,8 +2,12 @@ package chenyu.jokes.base;
 
 import android.app.Application;
 import android.util.Log;
-import retrofit.RestAdapter;
-
+//import retrofit2.RestAdapter;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 /**
  * Created by chenyu on 2017/3/3.
  */
@@ -15,14 +19,16 @@ public class App extends Application {
   @Override public void onCreate(){
     super.onCreate();
     instance = this;
-    serverAPI = new RestAdapter.Builder()
-        .setEndpoint(ServerAPI.ENDPOINT)
-        .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setLog(new RestAdapter.Log() {
-          @Override public void log(String message) {
-            Log.v("Retrofit", message);
-          }
-        })
+
+    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+    OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
+
+    serverAPI = new Retrofit.Builder()
+        .baseUrl(ServerAPI.ENDPOINT)
+        .addConverterFactory(JacksonConverterFactory.create())
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .client(httpClient)
         .build()
         .create(ServerAPI.class);
   }
@@ -30,3 +36,5 @@ public class App extends Application {
     return serverAPI;
   }
 }
+
+

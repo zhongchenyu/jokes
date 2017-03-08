@@ -1,8 +1,9 @@
 package chenyu.jokes.base;
 
+import chenyu.jokes.model.FunPicResponse;
 import chenyu.jokes.model.Response;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.http.Query;
+import retrofit2.http.GET;
 import rx.Observable;
 
 /**
@@ -19,5 +20,14 @@ public static final String ENDPOINT = "http://119.23.13.228";
       @Query("page") int page
       //@Query("pagesize") int pagesize,
       //@Query("time") String time
+  );
+
+
+  @GET("http://***REMOVED***/joke/img/list.from") Observable<Response> getFunPic(
+      @Query("key") String api_key,
+      @Query("sort") String sort,
+      @Query("page") int page,
+      @Query("pagesize") int pagesize,
+      @Query("time") String time
   );
 }

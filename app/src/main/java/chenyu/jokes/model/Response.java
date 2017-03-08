@@ -1,17 +1,20 @@
 package chenyu.jokes.model;
 
-import com.google.gson.annotations.SerializedName;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import org.parceler.Parcel;
 
 /**
  * Created by chenyu on 2017/3/3.
  */
 
-public class Response {
-  @SerializedName("result") public Data data;
+@Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Response {
 
-  public static class Data {
-    @SerializedName("data") public List<Joke> jokes;
+  @JsonProperty("result") public Result result;
 
-  }
+  //public static class Data {
+  //  @SerializedName("data") public List<Joke> jokes;
+  //}
 }

@@ -11,6 +11,7 @@ import rx.functions.Action2;
 import rx.functions.Func0;
 
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
+import static rx.schedulers.Schedulers.io;
 
 /**
  * Created by chenyu on 2017/3/3.
@@ -25,13 +26,13 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
     restartableFirst(1,
         new Func0<Observable<Response>>() {
           @Override public Observable<Response> call() {
-            return App.getServerAPI().getJokes(mPage).observeOn(mainThread());
+            return App.getServerAPI().getJokes(mPage).subscribeOn(io()).observeOn(mainThread());
           }
         },
         new Action2<JokeFragment, Response>() {
           @Override public void call(JokeFragment jokeFragment, Response response) {
-            Log.d("Presenter: ",response.data.jokes.size()+" ");
-            jokeFragment.onItemsNext(response.data.jokes);
+            //Log.d("Presenter: ",response.data.jokes.size()+" ");
+            jokeFragment.onItemsNext(response.result.data);
           }
         },
         new Action2<JokeFragment, Throwable>() {

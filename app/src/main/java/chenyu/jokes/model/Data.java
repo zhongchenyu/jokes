@@ -17,6 +17,7 @@ import static chenyu.jokes.base.App.fromHtml;
 @Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Data {
   @JsonProperty("content") public String content;
   @JsonProperty("updatetime") public String time;
+  @JsonProperty("hashId") public String hashId;
   @JsonProperty("url") public String url;
 
   public Uri getUri() {

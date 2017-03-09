@@ -135,7 +135,7 @@ public void setAdapter(Adapter adapter) {
 
   public void onItemsError(Throwable throwable) {
     Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
-
+    Log.d("onItemError",throwable.getMessage());
   }
 
   public void onLoadMore(){

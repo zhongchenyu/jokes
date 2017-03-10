@@ -1,17 +1,12 @@
 package chenyu.jokes.presenter;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import chenyu.jokes.base.App;
 import chenyu.jokes.base.BaseScrollPresenter;
-import chenyu.jokes.model.BlackList;
-import chenyu.jokes.model.FunPicResponse;
 import chenyu.jokes.model.Response;
-import chenyu.jokes.model.ServerBlackList;
 import chenyu.jokes.view.FunPic.FunPicFragment;
 import java.util.ArrayList;
-import java.util.List;
 import rx.Observable;
 import rx.functions.Action2;
 import rx.functions.Func0;
@@ -28,7 +23,6 @@ public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
   //private String time = String.valueOf(System.currentTimeMillis()/1000);
 
   private int mPage = 1;
-  private BlackList blackList = new BlackList();
   private ArrayList<String> mServerBlackList = new ArrayList<>();
   @Override protected void onCreate(Bundle savedState) {
     super.onCreate(savedState);
@@ -42,7 +36,6 @@ public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
         new Action2<FunPicFragment, Response>() {
           @Override
           public void call(FunPicFragment funPicFragment, Response response) {
-            //mServerBlackList = response.result.data;
             for (int i=0;i<response.result.data.size();i++) {
               mServerBlackList.add(response.result.data.get(i).hashId);
             }
@@ -67,13 +60,14 @@ public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
             },
             new Action2<FunPicFragment, Response>() {
               @Override public void call(FunPicFragment funPicFragment, Response funPicResponse) {
-                for (int i = 0; i < funPicResponse.result.data.size(); i++) {
-                  Log.d("FunPicPresenter",
-                      funPicResponse.result.data.get(i).hashId + " " + String.valueOf(
-                          mServerBlackList.contains(funPicResponse.result.data.get(i).hashId))+" "+mServerBlackList.toString());
+                for (int i = 0; i < funPicResponse.result.data.size();) {
+                  Log.d("FunPicPresenter","hashId: "+funPicResponse.result.data.get(i).hashId+" "+String.valueOf(mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)));
+
                   if (mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)) {
                     funPicResponse.result.data.remove(i);
+                    continue;
                   }
+                  i++;
                 }
                 funPicFragment.onItemsNext(funPicResponse.result.data);
               }

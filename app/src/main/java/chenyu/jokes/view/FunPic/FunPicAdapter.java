@@ -34,7 +34,6 @@ public class FunPicAdapter extends BaseScrollAdapter<Data>{
   @Override public void onBindViewHolder(ViewHolder holder, int position){
     super.onBindViewHolder(holder, position);
     content.setText(mItems.get(position).getContent());
-    //img.setImageURI(mItems.get(position).getUri());
 
     Uri uri = mItems.get(position).getUri();
     if (mItems.get(position).url.endsWith(".gif")) {

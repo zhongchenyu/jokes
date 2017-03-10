@@ -1,10 +1,9 @@
 package chenyu.jokes.base;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
-//import retrofit2.RestAdapter;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -14,7 +13,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * Created by chenyu on 2017/3/3.
  */
 
-public class App extends Application {
+public class App extends MultiDexApplication {
   private static App instance;
   private static ServerAPI serverAPI;
 

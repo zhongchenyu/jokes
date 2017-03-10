@@ -1,7 +1,6 @@
 package chenyu.jokes.presenter;
 
 import android.os.Bundle;
-import android.util.Log;
 import chenyu.jokes.base.App;
 import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.model.Response;
@@ -31,7 +30,6 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
         },
         new Action2<JokeFragment, Response>() {
           @Override public void call(JokeFragment jokeFragment, Response response) {
-            //Log.d("Presenter: ",response.data.jokes.size()+" ");
             jokeFragment.onItemsNext(response.result.data);
           }
         },

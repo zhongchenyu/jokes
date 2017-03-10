@@ -11,10 +11,5 @@ import org.parceler.Parcel;
  */
 
 @Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Response {
-
   @JsonProperty("result") public Result result;
-
-  //public static class Data {
-  //  @SerializedName("data") public List<Joke> jokes;
-  //}
 }

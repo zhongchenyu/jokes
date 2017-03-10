@@ -16,12 +16,6 @@ public class JokeAdapter extends BaseScrollAdapter<Data> {
   @BindView(R.id.content) public TextView content;
   @BindView(R.id.time) public TextView time;
 
-  /*
-  public JokeAdapter(){
-
-  }
-  */
-
  @Override public int getLayout() {
    return R.layout.item_joke;
  }

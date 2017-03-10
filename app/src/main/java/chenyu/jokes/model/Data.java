@@ -1,7 +1,6 @@
 package chenyu.jokes.model;
 
 import android.net.Uri;
-//import com.fasterxml.jackson.annotation.JsonIgnore;
 import android.text.Html;
 import android.text.Spanned;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

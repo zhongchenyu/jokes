@@ -25,7 +25,7 @@ public class MainActivity extends NucleusAppCompatActivity {
 
   JokeFragment jokeFragment = JokeFragment.create();
   FunPicFragment funPicFragment = FunPicFragment.create();
-  //TestTabSwitchFragment testTabSwitchFragment = TestTabSwitchFragment.newInstance();
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

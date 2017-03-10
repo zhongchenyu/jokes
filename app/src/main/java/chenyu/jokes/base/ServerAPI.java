@@ -1,10 +1,8 @@
 package chenyu.jokes.base;
 
-import chenyu.jokes.model.FunPicResponse;
 import chenyu.jokes.model.Response;
-import chenyu.jokes.model.ServerBlackList;
-import retrofit2.http.Query;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**

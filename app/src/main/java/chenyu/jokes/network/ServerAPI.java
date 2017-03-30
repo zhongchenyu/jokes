@@ -1,4 +1,4 @@
-package chenyu.jokes.base;
+package chenyu.jokes.network;
 
 import chenyu.jokes.model.Response;
 import retrofit2.http.GET;

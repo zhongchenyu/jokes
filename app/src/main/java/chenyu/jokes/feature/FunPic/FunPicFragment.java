@@ -1,4 +1,4 @@
-package chenyu.jokes.view.FunPic;
+package chenyu.jokes.feature.FunPic;
 
 import android.os.Bundle;
 import chenyu.jokes.R;

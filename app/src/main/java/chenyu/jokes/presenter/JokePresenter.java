@@ -1,10 +1,10 @@
 package chenyu.jokes.presenter;
 
 import android.os.Bundle;
-import chenyu.jokes.base.App;
+import chenyu.jokes.app.App;
 import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.model.Response;
-import chenyu.jokes.view.Joke.JokeFragment;
+import chenyu.jokes.feature.Joke.JokeFragment;
 import rx.Observable;
 import rx.functions.Action2;
 import rx.functions.Func0;

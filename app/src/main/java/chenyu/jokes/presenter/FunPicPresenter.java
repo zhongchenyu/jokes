@@ -2,11 +2,11 @@ package chenyu.jokes.presenter;
 
 import android.os.Bundle;
 import android.util.Log;
-import chenyu.jokes.base.App;
+import chenyu.jokes.app.App;
 import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.model.Data;
 import chenyu.jokes.model.Response;
-import chenyu.jokes.view.FunPic.FunPicFragment;
+import chenyu.jokes.feature.FunPic.FunPicFragment;
 import java.util.ArrayList;
 import java.util.Iterator;
 import rx.Observable;
@@ -68,16 +68,6 @@ public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
                     iterable.remove();
                   }
                 }
-                /*
-                for (int i = 0; i < funPicResponse.result.data.size();) {
-                  //Log.d("FunPicPresenter","hashId: "+funPicResponse.result.data.get(i).hashId+" "+String.valueOf(mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)));
-
-                  if (mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)) {
-                    funPicResponse.result.data.remove(i);
-                    continue;
-                  }
-                  i++;
-                }*/
                 funPicFragment.onItemsNext(funPicResponse.result.data);
               }
             },

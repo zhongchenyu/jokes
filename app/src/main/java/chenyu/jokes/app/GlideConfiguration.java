@@ -1,4 +1,4 @@
-package chenyu.jokes.base;
+package chenyu.jokes.app;
 
 import android.content.Context;
 import com.bumptech.glide.Glide;

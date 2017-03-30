@@ -1,11 +1,10 @@
-package chenyu.jokes.view.Joke;
+package chenyu.jokes.feature.Joke;
 
 import android.widget.TextView;
 import butterknife.BindView;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollAdapter;
 import chenyu.jokes.model.Data;
-import chenyu.jokes.model.Joke;
 
 /**
  * Created by chenyu on 2017/3/3.

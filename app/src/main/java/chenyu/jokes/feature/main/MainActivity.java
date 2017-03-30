@@ -1,4 +1,4 @@
-package chenyu.jokes.view;
+package chenyu.jokes.feature.main;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -9,8 +9,8 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
-import chenyu.jokes.view.FunPic.FunPicFragment;
-import chenyu.jokes.view.Joke.JokeFragment;
+import chenyu.jokes.feature.FunPic.FunPicFragment;
+import chenyu.jokes.feature.Joke.JokeFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import nucleus.view.NucleusAppCompatActivity;

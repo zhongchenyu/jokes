@@ -1,9 +1,9 @@
-package chenyu.jokes.base;
+package chenyu.jokes.app;
 
-import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 import android.text.Html;
 import android.text.Spanned;
+import chenyu.jokes.network.ServerAPI;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

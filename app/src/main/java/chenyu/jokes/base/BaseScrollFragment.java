@@ -12,12 +12,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
-import chenyu.jokes.model.Joke;
-import chenyu.jokes.presenter.JokePresenter;
-import chenyu.jokes.view.Joke.JokeAdapter;
 import java.util.List;
-import nucleus.factory.RequiresPresenter;
-import nucleus.presenter.RxPresenter;
 import nucleus.view.NucleusSupportFragment;
 import org.parceler.Parcels;
 /**

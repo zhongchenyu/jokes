@@ -29,6 +29,7 @@ android {
     exclude 'META-INF/LICENSE'
     exclude 'META-INF/NOTICE.txt'
     exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/rxjava.properties'
   }
 }
 dependencies {
@@ -41,7 +42,8 @@ dependencies {
   compile 'com.squareup.retrofit2:retrofit:2.2.0'
   compile 'com.squareup.retrofit2:converter-jackson:2.2.0'
   compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
-  compile 'io.reactivex:rxjava:1.0.8'
+  //compile 'io.reactivex:rxjava:1.0.8'
+  compile 'io.reactivex.rxjava2:rxjava:2.0.7'
   compile 'io.reactivex:rxandroid:0.24.0'
   compile 'info.android15.nucleus:nucleus:4.0.0'
   compile 'info.android15.nucleus:nucleus-support-v4:4.0.0'

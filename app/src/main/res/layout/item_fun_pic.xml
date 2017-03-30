@@ -18,7 +18,7 @@
         android:layout_marginTop="5dp" android:layout_below="@+id/content"/>
     <ImageView android:id="@+id/logo"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/img" android:layout_alignBottom="@+id/img"
+        android:layout_alignStart="@+id/img" android:layout_alignBottom="@+id/img"
         android:src="@drawable/ic_36" android:layout_margin="5dp"/>
   </RelativeLayout>
 

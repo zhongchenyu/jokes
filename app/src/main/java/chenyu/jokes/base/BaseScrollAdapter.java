@@ -29,16 +29,15 @@ public abstract class BaseScrollAdapter<Model> extends RecyclerView.Adapter<Base
 
   }
 
-
   public  int getLayout(){
     return 0;
-  };
+  }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(
         getLayout(),parent,false);
-    ViewHolder holder = new ViewHolder(view);
-    return holder;
+    //ViewHolder holder = new ViewHolder(view);
+    return new ViewHolder(view);
   }
 
   @Override public void onBindViewHolder(ViewHolder holder, int position){

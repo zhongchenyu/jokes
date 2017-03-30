@@ -10,8 +10,7 @@ import rx.Observable;
  */
 
 public interface ServerAPI {
-
-public static final String ENDPOINT = "http://119.23.13.228";
+  String ENDPOINT = "http://119.23.13.228";
 
   @GET("/content.php") Observable<Response> getJokes(
       //@Query("key") String api_key,

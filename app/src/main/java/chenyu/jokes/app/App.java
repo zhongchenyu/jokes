@@ -14,12 +14,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 
 public class App extends MultiDexApplication {
-  //private static App instance;
+
   private static ServerAPI serverAPI;
 
   @Override public void onCreate(){
     super.onCreate();
-    //instance = this;
 
     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
     logging.setLevel(HttpLoggingInterceptor.Level.BODY);

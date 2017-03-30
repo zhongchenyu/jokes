@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import chenyu.jokes.base.App;
 import chenyu.jokes.base.BaseScrollPresenter;
+import chenyu.jokes.model.Data;
 import chenyu.jokes.model.Response;
 import chenyu.jokes.view.FunPic.FunPicFragment;
 import java.util.ArrayList;
+import java.util.Iterator;
 import rx.Observable;
 import rx.functions.Action2;
 import rx.functions.Func0;
@@ -60,15 +62,22 @@ public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
             },
             new Action2<FunPicFragment, Response>() {
               @Override public void call(FunPicFragment funPicFragment, Response funPicResponse) {
+                Iterator<Data> iterable = funPicResponse.result.data.iterator();
+                while (iterable.hasNext()) {
+                  if(mServerBlackList.contains(iterable.next().hashId)) {
+                    iterable.remove();
+                  }
+                }
+                /*
                 for (int i = 0; i < funPicResponse.result.data.size();) {
-                  Log.d("FunPicPresenter","hashId: "+funPicResponse.result.data.get(i).hashId+" "+String.valueOf(mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)));
+                  //Log.d("FunPicPresenter","hashId: "+funPicResponse.result.data.get(i).hashId+" "+String.valueOf(mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)));
 
                   if (mServerBlackList.contains(funPicResponse.result.data.get(i).hashId)) {
                     funPicResponse.result.data.remove(i);
                     continue;
                   }
                   i++;
-                }
+                }*/
                 funPicFragment.onItemsNext(funPicResponse.result.data);
               }
             },

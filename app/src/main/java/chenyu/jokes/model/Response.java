@@ -1,9 +1,7 @@
 package chenyu.jokes.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 import org.parceler.Parcel;
 
 /**
@@ -11,5 +9,5 @@ import org.parceler.Parcel;
  */
 
 @Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Response {
-  @JsonProperty("result") public Result result;
+  public Result result;
 }

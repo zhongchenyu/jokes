@@ -13,10 +13,10 @@ import static chenyu.jokes.app.App.fromHtml;
  */
 
 @Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Data {
-  @JsonProperty("content") public String content;
+  public String content;
   @JsonProperty("updatetime") public String time;
-  @JsonProperty("hashId") public String hashId;
-  @JsonProperty("url") public String url;
+  public String hashId;
+  public String url;
 
   public Uri getUri() {
     return Uri.parse(url);

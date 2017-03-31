@@ -10,5 +10,5 @@ import org.parceler.Parcel;
  */
 
 @Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Result {
-  @JsonProperty("data") public ArrayList<Data> data;
+  public ArrayList<Data> data;
 }

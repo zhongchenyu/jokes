@@ -18,11 +18,11 @@ import static rx.schedulers.Schedulers.io;
 
 public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
   private int mPage = 1;
-
+  public static final int GET_JOKES = 1;
   @Override protected void onCreate(Bundle savedState){
     super.onCreate(savedState);
 
-    restartableFirst(1,
+    restartableFirst(GET_JOKES,
         new Func0<Observable<Response>>() {
           @Override public Observable<Response> call() {
             return App.getServerAPI().getJokes(mPage).subscribeOn(io()).observeOn(mainThread());
@@ -44,8 +44,6 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
 
   @Override  public void request(int page) {
     mPage = page;
-    start(1);
+    start(GET_JOKES);
   }
-
-
 }

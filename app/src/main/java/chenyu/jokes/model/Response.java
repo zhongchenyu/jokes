@@ -10,4 +10,6 @@ import org.parceler.Parcel;
 
 @Parcel @JsonIgnoreProperties(ignoreUnknown = true) public class Response {
   public Result result;
+  @JsonProperty("error_code") public int errorCode;
+  public String reason;
 }

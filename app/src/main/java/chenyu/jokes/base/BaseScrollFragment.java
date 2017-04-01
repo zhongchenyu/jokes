@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
@@ -96,6 +97,7 @@ public void setAdapter(Adapter adapter) {
   }
 
   public void onItemsError(Throwable throwable) {
+    Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
     Log.d("onItemError",throwable.getMessage());
   }
 

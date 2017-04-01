@@ -1,13 +1,17 @@
 package chenyu.jokes.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
 import chenyu.jokes.app.App;
 import chenyu.jokes.base.BaseScrollPresenter;
+import chenyu.jokes.model.Data;
 import chenyu.jokes.model.Response;
 import chenyu.jokes.feature.Joke.JokeFragment;
+import java.util.ArrayList;
 import rx.Observable;
 import rx.functions.Action2;
 import rx.functions.Func0;
+import rx.functions.Func1;
 
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
 import static rx.schedulers.Schedulers.io;
@@ -23,14 +27,23 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
     super.onCreate(savedState);
 
     restartableFirst(GET_JOKES,
-        new Func0<Observable<Response>>() {
-          @Override public Observable<Response> call() {
-            return App.getServerAPI().getJokes(mPage).subscribeOn(io()).observeOn(mainThread());
+        new Func0<Observable<ArrayList<Data>>>() {
+          @Override public Observable<ArrayList<Data>> call() {
+            return App.getServerAPI().getJokes(mPage).subscribeOn(io()).observeOn(mainThread())
+                .flatMap(new Func1<Response, Observable<ArrayList<Data>>>() {
+                  @Override public Observable<ArrayList<Data>> call(Response response) {
+                    Log.d("JokePresenter","errorCode: "+String.valueOf(response.errorCode));
+                    if(response.errorCode !=0) {
+                      return Observable.error(new Throwable(response.reason));
+                    }
+                    return Observable.just(response.result.data);
+                  }
+                });
           }
         },
-        new Action2<JokeFragment, Response>() {
-          @Override public void call(JokeFragment jokeFragment, Response response) {
-            jokeFragment.onItemsNext(response.result.data);
+        new Action2<JokeFragment, ArrayList<Data>>() {
+          @Override public void call(JokeFragment jokeFragment, ArrayList<Data> data) {
+            jokeFragment.onItemsNext(data);
           }
         },
         new Action2<JokeFragment, Throwable>() {

@@ -22,14 +22,26 @@ import static rx.schedulers.Schedulers.io;
 public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
   private int mPage = 1;
   public static final int GET_JOKES = 1;
-  @Override protected void onCreate(Bundle savedState){
 
+  private Func1 errorCodeProcess = new Func1<Response, Observable<ArrayList<Data>>>() {
+    @Override public Observable<ArrayList<Data>> call(Response response) {
+      if(response.errorCode !=0) {
+        return Observable.error(new Throwable(response.reason));
+      }
+      return Observable.just(response.result.data);
+    }
+  };
+
+  @Override protected void onCreate(Bundle savedState){
 
     super.onCreate(savedState);
     restartableFirst(GET_JOKES,
         new Func0<Observable<ArrayList<Data>>>() {
           @Override public Observable<ArrayList<Data>> call() {
-            return App.getServerAPI().getJokes(mPage).subscribeOn(io()).observeOn(mainThread())
+            return App.getServerAPI()
+                .getJokes(mPage)
+                .subscribeOn(io())
+                .observeOn(mainThread())
                 .flatMap(errorCodeProcess);
           }
         },
@@ -44,7 +56,7 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
           }
         }
     );
-    request(1);
+    request(mPage);
   }
 
   @Override  public void request(int page) {
@@ -52,12 +64,4 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
     start(GET_JOKES);
   }
 
-  private Func1 errorCodeProcess = new Func1<Response, Observable<ArrayList<Data>>>() {
-    @Override public Observable<ArrayList<Data>> call(Response response) {
-      if(response.errorCode !=0) {
-        return Observable.error(new Throwable(response.reason));
-      }
-      return Observable.just(response.result.data);
-    }
-  };
 }

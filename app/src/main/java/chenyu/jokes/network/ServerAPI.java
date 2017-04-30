@@ -10,15 +10,15 @@ import rx.Observable;
  */
 
 public interface ServerAPI {
-  String ENDPOINT = "http://119.23.13.228";
+  String ENDPOINT = "http://119.23.254.238/api/"; //http://119.23.13.228";
 
-  @GET("/content.php") Observable<Response> getJokes(
+  @GET("jokes") Observable<Response> getJokes(
       @Query("page") int page
   );
 
-  @GET("/img.php") Observable<Response> getFunPic(
+  @GET("funpic") Observable<Response> getFunPic(
       @Query("page") int page
   );
 
-  @GET("/blacklist.json") Observable<Response> getBlackList();
+  @GET("blacklist") Observable<Response> getBlackList();
 }

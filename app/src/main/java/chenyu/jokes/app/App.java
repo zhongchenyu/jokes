@@ -18,6 +18,12 @@ public class App extends MultiDexApplication {
 
   private static ServerAPI serverAPI;
 
+
+
+  public static String TOKEN;
+  public static String USER_ID;
+
+
   @Override public void onCreate(){
     super.onCreate();
 

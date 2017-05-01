@@ -48,12 +48,34 @@
       android:textColor="@android:color/white" android:textSize="20sp"
       android:layout_marginRight="36dp" android:clickable="true"/>
   <TextView android:id="@+id/name"
-      android:text="User name"
       android:layout_width="96dp"
       android:layout_height="38dp"
       app:layout_constraintLeft_toRightOf="@+id/avatar"
       android:layout_marginLeft="38dp" tools:layout_constraintTop_creator="1"
       tools:layout_constraintBottom_creator="1" android:layout_marginStart="38dp"
       app:layout_constraintBottom_toBottomOf="@+id/avatar"
-      app:layout_constraintTop_toTopOf="@+id/avatar" android:visibility="invisible"/>
+      app:layout_constraintTop_toTopOf="@+id/avatar" android:visibility="invisible"
+      app:layout_constraintVertical_bias="0.0" android:textSize="24sp"/>
+  <TextView  android:id="@+id/email"
+      android:layout_width="300dp"
+      android:layout_height="32dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintTop_toBottomOf="@+id/name"
+      app:layout_constraintLeft_toLeftOf="@+id/name" android:textSize="24sp"/>
+  <Button android:id="@+id/notice"
+      android:text="通知"
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:layout_marginTop="16dp" android:visibility="invisible"
+      app:layout_constraintTop_toBottomOf="@+id/logout" android:layout_marginLeft="0dp"
+      app:layout_constraintLeft_toLeftOf="@+id/logout" android:background="@color/baseColor"
+      android:textColor="@android:color/white" android:textSize="20sp"/>
+  <TextView android:id="@+id/notice_content"
+      android:text="Notice"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/notice"
+      android:layout_marginRight="32dp" app:layout_constraintRight_toRightOf="parent"
+      android:layout_marginLeft="32dp" app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintHorizontal_bias="0.0" android:textSize="16sp"/>
 </android.support.constraint.ConstraintLayout>

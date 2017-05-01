@@ -16,7 +16,7 @@ public interface ServerAPI {
       @Query("page") int page
   );
 
-  @GET("funpic") Observable<Response> getFunPic(
+  @GET("pictures") Observable<Response> getFunPic(
       @Query("page") int page
   );
 

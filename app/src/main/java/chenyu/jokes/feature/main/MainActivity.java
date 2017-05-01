@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import chenyu.jokes.R;
 import chenyu.jokes.feature.FunPic.FunPicFragment;
 import chenyu.jokes.feature.Joke.JokeFragment;
+import chenyu.jokes.feature.more.MoreFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import nucleus.view.NucleusAppCompatActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends NucleusAppCompatActivity {
 
   JokeFragment jokeFragment = JokeFragment.create();
   FunPicFragment funPicFragment = FunPicFragment.create();
+  MoreFragment moreFragment = MoreFragment.create();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class MainActivity extends NucleusAppCompatActivity {
 
     addFragment(funPicFragment);
     hideFragment(funPicFragment);
+    addFragment(moreFragment);
+    hideFragment(moreFragment);
     addFragment(jokeFragment);
 
     mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -49,11 +53,17 @@ public class MainActivity extends NucleusAppCompatActivity {
           case R.id.tabJoke:
             showFragment(jokeFragment);
             hideFragment(funPicFragment);
+            hideFragment(moreFragment);
             break;
           case R.id.tabFunPic:
             showFragment(funPicFragment);
             hideFragment(jokeFragment);
+            hideFragment(moreFragment);
             break;
+          case R.id.tabMore:
+            showFragment(moreFragment);
+            hideFragment(funPicFragment);
+            hideFragment(jokeFragment);
         }
       }
     });

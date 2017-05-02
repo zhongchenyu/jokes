@@ -68,7 +68,7 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogin.setVisibility(View.INVISIBLE);
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
-    mBtnNotice.setVisibility(View.VISIBLE);
+    mBtnNotice.setEnabled(true);
   }
   public void onGetNoticeSuccess(Notice notice) {
     mTxtNotice.setText(notice.content);
@@ -90,10 +90,10 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         mBtnLogin.setVisibility(View.VISIBLE);
         mBtnLogout.setVisibility(View.INVISIBLE);
         mBtnRegister.setVisibility(View.VISIBLE);
-        mBtnNotice.setVisibility(View.INVISIBLE);
+        mBtnNotice.setEnabled(false);
         mTxtName.setVisibility(View.INVISIBLE);
         mTxtEmail.setVisibility(View.INVISIBLE);
-        mTxtNotice.setText("Notice");
+        mTxtNotice.setText("");
         break;
       case R.id.register:
         Toast.makeText(getContext(), "register", Toast.LENGTH_SHORT).show();

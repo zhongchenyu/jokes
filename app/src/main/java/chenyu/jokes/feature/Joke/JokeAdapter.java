@@ -22,7 +22,7 @@ public class JokeAdapter extends BaseScrollAdapter<Data> {
   @Override public void onBindViewHolder(ViewHolder holder, int position){
    super.onBindViewHolder(holder,position);
     content.setText(mItems.get(position).getContent());
-    time.setText(mItems.get(position).time + " "+position);
+    time.setText(mItems.get(position).time);
   }
 
 }

@@ -13,7 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
-import static chenyu.jokes.app.App.TOKEN;
 
 /**
  * Created by chenyu on 2017/3/3.

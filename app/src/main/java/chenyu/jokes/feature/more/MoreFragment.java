@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chenyu.jokes.R;
+import chenyu.jokes.app.AccountManager;
 import chenyu.jokes.app.App;
 import chenyu.jokes.model.Account;
 import chenyu.jokes.model.Notice;
@@ -58,8 +59,8 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     Toast.makeText(getContext(), "注册成功，请登录", Toast.LENGTH_SHORT).show();
   }
   public void onLoginSuccess(Account account) {
-    App.TOKEN = account.token;
-    App.USER_ID = account.user.id;
+    AccountManager.create().setAccount(account);
+
     mTxtName.setVisibility(View.VISIBLE);
     mTxtName.setText(account.user.name);
     mTxtEmail.setVisibility(View.VISIBLE);
@@ -84,8 +85,8 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         break;
       case R.id.logout:
         //Toast.makeText(getContext(), "logout", Toast.LENGTH_SHORT).show();
-        App.USER_ID = "";
-        App.TOKEN = "";
+        AccountManager.create().clearAccount();
+
         mBtnLogin.setVisibility(View.VISIBLE);
         mBtnLogout.setVisibility(View.INVISIBLE);
         mBtnRegister.setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package chenyu.jokes.presenter;
 
 import android.os.Bundle;
+import chenyu.jokes.app.AccountManager;
 import chenyu.jokes.app.App;
 import chenyu.jokes.feature.more.MoreFragment;
 import chenyu.jokes.model.Account;
@@ -68,7 +69,7 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
     restartableFirst(NOTICE,
         new Func0<Observable<Notice>>() {
           @Override public Observable<Notice> call() {
-            return App.getServerAPI().getNotice("Bearer " + App.TOKEN)
+            return App.getServerAPI().getNotice("Bearer " + AccountManager.create().getToken())
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
           }
         },

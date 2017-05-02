@@ -1,5 +1,6 @@
 package chenyu.jokes.app;
 
+import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 import android.text.Html;
 import android.text.Spanned;
@@ -17,16 +18,12 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class App extends MultiDexApplication {
 
   private static ServerAPI serverAPI;
-
-
-
-  public static String TOKEN;
-  public static String USER_ID;
-
+  private static Context context;
 
   @Override public void onCreate(){
     super.onCreate();
 
+    context = getApplicationContext();
     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
     logging.setLevel(HttpLoggingInterceptor.Level.BODY);
     OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
@@ -43,6 +40,9 @@ public class App extends MultiDexApplication {
     return serverAPI;
   }
 
+  public static Context getAppContext() {
+    return context;
+  }
   @SuppressWarnings("deprecation")
   public static Spanned fromHtml(String html) {
     Spanned result;

@@ -3,6 +3,7 @@ package chenyu.jokes.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import chenyu.jokes.model.Account;
+import chenyu.jokes.model.User;
 
 /**
  * Created by chenyu on 2017/5/2.
@@ -51,6 +52,13 @@ public class AccountManager {
     editor.putString("userId", "");
     editor.putString("userEmail", "");
     editor.putString("userName", "");
+    editor.commit();
+  }
+
+  public void setUser(User user) {
+    editor.putString("userId", user.id);
+    editor.putString("userEmail", user.email);
+    editor.putString("userName", user.name);
     editor.commit();
   }
 }

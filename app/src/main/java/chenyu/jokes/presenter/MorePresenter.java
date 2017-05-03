@@ -7,6 +7,7 @@ import chenyu.jokes.feature.more.MoreFragment;
 import chenyu.jokes.model.Account;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Token;
+import chenyu.jokes.model.User;
 import nucleus.presenter.RxPresenter;
 import rx.Observable;
 import rx.functions.Action2;
@@ -21,6 +22,7 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
   private static final int REGISTER = 1;
   private static final int LOGIN = 2;
   private static final int NOTICE = 3;
+  private static final int USER = 4;
   private String mName;
   private String mEmail;
   private String mPassword;
@@ -84,7 +86,27 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
           }
         }
     );
+
+    restartableFirst(USER,
+        new Func0<Observable<User>>() {
+          @Override public Observable<User> call() {
+            return App.getServerAPI().getUserInfo("Bearer " + AccountManager.create().getToken())
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+          }
+        },
+        new Action2<MoreFragment, User>() {
+          @Override public void call(MoreFragment moreFragment, User user) {
+          moreFragment.onGetUserSuccess(user);
+          }
+        },
+        new Action2<MoreFragment, Throwable>() {
+          @Override public void call(MoreFragment moreFragment, Throwable throwable) {
+            moreFragment.onError(throwable);
+          }
+        }
+    );
   }
+
 
   public void register(String name, String email, String password) {
     mName = name;
@@ -101,5 +123,9 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
 
   public void getNotice() {
     start(NOTICE);
+  }
+
+  public void getUserInfo() {
+    start(USER);
   }
 }

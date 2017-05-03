@@ -16,9 +16,9 @@
 
     <TextView android:id="@+id/name"
         android:layout_width="wrap_content" android:layout_height="32dp"
-        android:visibility="invisible" android:textSize="28sp"
+        android:visibility="invisible" android:textSize="24sp"
         android:layout_toEndOf="@+id/avatar" android:layout_marginStart="16dp"
-        android:layout_alignParentTop="true" android:layout_marginTop="16dp"/>
+        android:layout_alignParentTop="true" android:layout_marginTop="8dp"/>
     <TextView android:id="@+id/email"
         android:layout_width="wrap_content" android:layout_height="32dp"
         android:textSize="16sp" android:visibility="invisible"

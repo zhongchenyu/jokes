@@ -18,5 +18,7 @@
       android:layout_height="wrap_content"
       android:hint="password"
       android:inputType="textPassword"/>
-
+  <EditText android:id="@+id/password_confirmation"
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:hint="confirm password" android:inputType="textPassword"/>
 </LinearLayout>

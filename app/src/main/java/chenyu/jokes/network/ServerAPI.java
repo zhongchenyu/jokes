@@ -5,6 +5,7 @@ import chenyu.jokes.model.Account;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Response;
 import chenyu.jokes.model.Token;
+import chenyu.jokes.model.User;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -44,6 +45,10 @@ public interface ServerAPI {
 
 
   @GET("notices") Observable<Notice> getNotice(
+      @Header("Authorization") String token
+  );
+
+  @GET("user") Observable<User> getUserInfo(
       @Header("Authorization") String token
   );
 }

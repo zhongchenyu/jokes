@@ -4,6 +4,8 @@ import android.os.Bundle;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollFragment;
 import chenyu.jokes.presenter.JokePresenter;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import nucleus.factory.RequiresPresenter;
 
 /**
@@ -21,9 +23,12 @@ public class JokeFragment extends BaseScrollFragment<JokeAdapter,JokePresenter> 
   @Override public void onCreate(Bundle state){
     super.onCreate(state);
     setAdapter(new JokeAdapter());
+
   }
 
-@Override public int getLayout() {
+ @Override public int getLayout() {
   return R.layout.fragment_joke;
 }
+
+
 }

@@ -5,6 +5,8 @@ import android.support.multidex.MultiDexApplication;
 import android.text.Html;
 import android.text.Spanned;
 import chenyu.jokes.network.ServerAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -19,6 +21,9 @@ public class App extends MultiDexApplication {
 
   private static ServerAPI serverAPI;
   private static Context context;
+  private static IWXAPI WechatApi;
+  private final String APP_ID = "wxf4a48877a0f1978a";
+
 
   @Override public void onCreate(){
     super.onCreate();
@@ -35,6 +40,8 @@ public class App extends MultiDexApplication {
         .client(httpClient)
         .build()
         .create(ServerAPI.class);
+
+    WechatApi = WXAPIFactory.createWXAPI(this, APP_ID);
   }
   public static ServerAPI getServerAPI() {
     return serverAPI;
@@ -43,6 +50,12 @@ public class App extends MultiDexApplication {
   public static Context getAppContext() {
     return context;
   }
+
+  public static IWXAPI getWXAPI() {
+    return WechatApi;
+  }
+
+
   @SuppressWarnings("deprecation")
   public static Spanned fromHtml(String html) {
     Spanned result;

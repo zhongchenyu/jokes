@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent" android:background="@android:color/white"
+    android:layout_height="480dp" android:padding="8dp" >
+  <LinearLayout
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:padding="16dp" android:background="@android:color/white">
+    <ImageView android:id="@+id/wechat"
+        android:layout_width="64dp" android:layout_height="64dp"
+        android:src="@drawable/wechat" android:adjustViewBounds="true"
+        android:scaleType="fitCenter" android:clickable="true"/>
+    <ImageView android:id="@+id/wechat_moment"
+        android:layout_width="64dp" android:layout_height="64dp"
+        android:src="@drawable/wechat_moment" android:adjustViewBounds="true"
+        android:scaleType="fitCenter" android:clickable="true"
+        android:layout_marginStart="16dp"/>
+    <ImageView android:id="@+id/more"
+        android:layout_width="64dp" android:layout_height="64dp"
+        android:src="@drawable/ic_apps" android:adjustViewBounds="true"
+        android:scaleType="fitCenter" android:clickable="true"
+        android:layout_marginStart="16dp"/>
+  </LinearLayout>
+
+  <View android:layout_width="match_parent" android:layout_height="1dp"
+    android:background="@color/bgGrey"/>
+  <TextView android:id="@+id/cancel"
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+       android:gravity="center_horizontal" android:textSize="20sp"
+      android:text="取消" android:clickable="true"
+      android:layout_marginTop="8dp" android:background="@android:color/white"/>
+</LinearLayout>

@@ -110,7 +110,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         mTxtNotice.setText("");
         break;
       case R.id.register:
-        Toast.makeText(getContext(), "register", Toast.LENGTH_SHORT).show();
         showRegisterDialog();
         break;
       case R.id.notice:
@@ -156,7 +155,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
             alertDialog.dismiss();
           }
         });
-
   }
 
   private void showLoginDialog() {

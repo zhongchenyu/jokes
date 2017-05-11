@@ -1,10 +1,13 @@
 package chenyu.jokes.feature.FunPic;
 
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollAdapter;
 import chenyu.jokes.model.Data;
@@ -19,17 +22,19 @@ import com.squareup.picasso.Picasso;
  * Created by chenyu on 2017/3/7.
  */
 
-public class FunPicAdapter extends BaseScrollAdapter<Data>{
-  @BindView(R.id.content) public TextView content;
-  @BindView(R.id.img) public ImageView img;
+public class FunPicAdapter extends BaseScrollAdapter<Data, FunPicAdapter.FunPicViewHolder>{
+
 
   @Override public int getLayout() {
     return R.layout.item_fun_pic;
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, int position){
+  @Override protected FunPicViewHolder getViewHolder(View view) {
+    return new FunPicViewHolder(view);
+  }
+  @Override public void onBindViewHolder(FunPicViewHolder holder, int position){
     super.onBindViewHolder(holder, position);
-    content.setText(mItems.get(position).getContent());
+    holder.content.setText(mItems.get(position).getContent());
 
     Uri uri = mItems.get(position).getUri();
     if (mItems.get(position).url.endsWith(".gif")) {
@@ -53,9 +58,9 @@ public class FunPicAdapter extends BaseScrollAdapter<Data>{
               return false;
             }
           })
-          .into(img);
+          .into(holder.img);
     } else {
-      Picasso.with(holder.itemView.getContext()).load(uri).into(img);
+      Picasso.with(holder.itemView.getContext()).load(uri).into(holder.img);
     }
 
 
@@ -83,5 +88,16 @@ public class FunPicAdapter extends BaseScrollAdapter<Data>{
         })
         .into(img);
         */
+  }
+
+  public static class FunPicViewHolder extends RecyclerView.ViewHolder {
+    @BindView(R.id.content) public TextView content;
+    @BindView(R.id.img) public ImageView img;
+
+    public FunPicViewHolder(View view) {
+      super(view);
+
+      ButterKnife.bind(this,view);
+    }
   }
 }

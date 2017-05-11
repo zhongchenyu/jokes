@@ -15,11 +15,11 @@ import java.util.List;
  * Created by chenyu on 2017/3/3.
  */
 
-public abstract class BaseScrollAdapter<Model> extends RecyclerView.Adapter<BaseScrollAdapter.ViewHolder> {
+public abstract class BaseScrollAdapter<Model, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
 
   protected List<Model> mItems = new ArrayList<>();
-
+  protected ViewGroup parent;
 
   public BaseScrollAdapter(List<Model> items) {
     mItems = items;
@@ -33,14 +33,16 @@ public abstract class BaseScrollAdapter<Model> extends RecyclerView.Adapter<Base
     return 0;
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(
         getLayout(),parent,false);
+    this.parent = parent;
     //ViewHolder holder = new ViewHolder(view);
-    return new ViewHolder(view);
+    return getViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, int position){
+  protected abstract VH getViewHolder(View view) ;
+  @Override public void onBindViewHolder(VH holder, int position){
     ButterKnife.bind(this,holder.itemView);
   }
 

@@ -13,7 +13,7 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <meta-data android:name="chenyu.jokes.app.GlideConfiguration" android:value="GlideModule"/>
-    <activity android:name=".feature.main.MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+    <activity android:name=".feature.main.MainActivity" android:theme="@style/AppTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

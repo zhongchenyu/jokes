@@ -34,8 +34,7 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
         new Func0<Observable<Token>>() {
           @Override public Observable<Token> call() {
             return App.getServerAPI().register(mName, mEmail, mPassword)
-                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                ;
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
           }
         },
         new Action2<MoreFragment, Token>() {

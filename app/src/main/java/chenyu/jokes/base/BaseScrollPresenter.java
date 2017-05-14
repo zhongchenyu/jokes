@@ -1,5 +1,6 @@
 package chenyu.jokes.base;
 
+import chenyu.jokes.app.AccountManager;
 import nucleus.presenter.RxPresenter;
 
 /**
@@ -9,5 +10,10 @@ import nucleus.presenter.RxPresenter;
 public class BaseScrollPresenter<M> extends RxPresenter<M> {
   public void request(int page){
 
+  }
+
+  protected String getSendToken()
+  {
+    return "Bearer " + AccountManager.create().getToken();
   }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollFragment;
+import chenyu.jokes.constant.AttitudeType;
 import chenyu.jokes.model.MyResponse;
 import chenyu.jokes.presenter.JokePresenter;
 import nucleus.factory.RequiresPresenter;
@@ -29,8 +30,8 @@ public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter>
     return R.layout.fragment_joke;
   }
 
-  public void onUP(int jokeId, int position) {
-    getPresenter().up(jokeId, position);
+  public void onAttitude(int jokeId, int position, AttitudeType attitudeType) {
+    getPresenter().attitude(jokeId, position,attitudeType);
   }
 
   public void onDown(int jokeId, int position) {
@@ -40,12 +41,12 @@ public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter>
   public void onCollect(int jokeId, int position) {
     getPresenter().collect(jokeId, position);
   }
-  public void onUPSuccess(int position, MyResponse response) {
-    mAdapter.changeAttitude(position, JokeAdapter.ACTION_UP);
+  public void onAttitudeSuccess(int position, MyResponse response, AttitudeType attitudeType) {
+    mAdapter.changeAttitude(position, attitudeType);
     mAdapter.notifyDataSetChanged();
     Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
   }
-
+/*
   public void onDownSuccess(int position, MyResponse response) {
     mAdapter.changeAttitude(position, JokeAdapter.ACTION_DOWN);
     mAdapter.notifyDataSetChanged();
@@ -57,4 +58,5 @@ public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter>
     mAdapter.notifyDataSetChanged();
     Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
   }
+  */
 }

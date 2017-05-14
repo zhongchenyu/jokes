@@ -4,6 +4,7 @@ import android.os.Bundle;
 import chenyu.jokes.app.AccountManager;
 import chenyu.jokes.app.App;
 import chenyu.jokes.base.BaseScrollPresenter;
+import chenyu.jokes.constant.AttitudeType;
 import chenyu.jokes.feature.Joke.JokeFragment;
 import chenyu.jokes.model.Data;
 import chenyu.jokes.model.MyResponse;
@@ -31,7 +32,8 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
   private static final int DOWN = 3;
   private static final int COLLECT = 4;
   private static final int COMMENT = 5;
-
+  private static final int ATTITUDE_START = 100;
+  private AttitudeType mAttitudeType ;
   private Func1 errorCodeProcess = new Func1<MyResponse, Observable<ArrayList<Data>>>() {
     @Override public Observable<ArrayList<Data>> call(MyResponse response) {
       //if(response.errorCode !=0) {
@@ -48,7 +50,7 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
         new Func0<Observable<ArrayList<Data>>>() {
           @Override public Observable<ArrayList<Data>> call() {
             return App.getServerAPI()
-                .getJokes("Bearer " + AccountManager.create().getToken(), mPage)
+                .getJokes(getSendToken(), mPage)
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .flatMap(errorCodeProcess);
@@ -66,18 +68,18 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
         }
     );
 
-    restartableFirst(UP,
+    restartableFirst(ATTITUDE_START,
         new Func0<Observable<MyResponse>>() {
           @Override public Observable<MyResponse> call() {
             return App.getServerAPI()
-                .attitude("Bearer " + AccountManager.create().getToken(), mJokeId, "up")
+                .attitude(getSendToken(), mJokeId, mAttitudeType.getPath())
                 .subscribeOn(io())
                 .observeOn(mainThread());
           }
         },
         new Action2<JokeFragment, MyResponse>() {
           @Override public void call(JokeFragment jokeFragment, MyResponse myResponse) {
-            jokeFragment.onUPSuccess(mPosition, myResponse);
+            jokeFragment.onAttitudeSuccess(mPosition, myResponse, mAttitudeType);
           }
         },
         new Action2<JokeFragment, Throwable>() {
@@ -86,7 +88,7 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
           }
         }
     );
-
+/*
     restartableFirst(DOWN,
         new Func0<Observable<MyResponse>>() {
           @Override public Observable<MyResponse> call() {
@@ -127,6 +129,7 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
           }
         }
     );
+    */
     request(mPage);
   }
 
@@ -135,10 +138,11 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
     start(GET_JOKES);
   }
 
-  public void up(int jokeId, int position) {
+  public void attitude(int jokeId, int position, AttitudeType attitudeType) {
     mJokeId = jokeId;
     mPosition = position;
-    start(UP);
+    mAttitudeType = attitudeType;
+    start(ATTITUDE_START);
   }
 
   public void down(int jokeId, int position) {

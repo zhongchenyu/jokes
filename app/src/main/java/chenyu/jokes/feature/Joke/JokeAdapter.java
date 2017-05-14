@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollAdapter;
+import chenyu.jokes.constant.AttitudeType;
 import chenyu.jokes.feature.main.MainActivity;
 import chenyu.jokes.model.Data;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -101,16 +102,16 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
       switch (view.getId()) {
         case R.id.up:
 
-          jokeFragment.onUP(jokeId, getAdapterPosition());
+          jokeFragment.onAttitude(jokeId, getAdapterPosition(), AttitudeType.UP);
           break;
         case R.id.down:
-          jokeFragment.onDown(jokeId, getAdapterPosition());
+          jokeFragment.onAttitude(jokeId, getAdapterPosition(), AttitudeType.DOWN);
           break;
         case R.id.comment:
           Toast.makeText(itemView.getContext(), "comment", Toast.LENGTH_SHORT).show();
           break;
         case R.id.collect:
-          jokeFragment.onCollect(jokeId, getAdapterPosition());
+          jokeFragment.onAttitude(jokeId, getAdapterPosition(),AttitudeType.COLLECT);
           break;
       }
     }
@@ -118,21 +119,21 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
 
   }
 
-  public void changeAttitude(int position, int action) {
-    switch (action) {
-      case ACTION_UP:
+  public void changeAttitude(int position, AttitudeType attitudeType) {
+    switch (attitudeType) {
+      case UP:
         toggleUp(position);
         break;
-      case ACTION_DOWN:
+      case DOWN:
         toggleDown(position);
         break;
-      case ACTION_COLLECT:
+      case COLLECT:
         toggleCollect(position);
         break;
     }
   }
 
-  
+
   private void toggleUp(int position) {
     switch (mItems.get(position).my_attitude) {
       case 1:

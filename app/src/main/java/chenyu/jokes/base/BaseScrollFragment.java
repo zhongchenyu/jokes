@@ -25,7 +25,7 @@ public  class BaseScrollFragment<Adapter extends BaseScrollAdapter,P extends Bas
   private int currentPage = 1;
   private int previousTotal = 0;
   private boolean loading = true;
-  private Adapter mAdapter;
+  protected Adapter mAdapter;
 
 public void setAdapter(Adapter adapter) {
   mAdapter = adapter;

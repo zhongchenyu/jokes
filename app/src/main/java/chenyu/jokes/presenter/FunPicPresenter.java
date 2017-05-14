@@ -2,9 +2,11 @@ package chenyu.jokes.presenter;
 
 import android.os.Bundle;
 import android.util.Log;
+import chenyu.jokes.app.AccountManager;
 import chenyu.jokes.app.App;
 import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.model.Data;
+import chenyu.jokes.model.MyResponse;
 import chenyu.jokes.model.Response;
 import chenyu.jokes.feature.FunPic.FunPicFragment;
 import java.util.ArrayList;
@@ -52,23 +54,23 @@ public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
     );
 
         restartableFirst(1,
-            new Func0<Observable<Response>>() {
-              @Override public Observable<Response> call() {
+            new Func0<Observable<MyResponse>>() {
+              @Override public Observable<MyResponse> call() {
                 return App.getServerAPI()
-                    .getFunPic(mPage)
+                    .getFunPic("Bearer " + AccountManager.create().getToken(), mPage)
                     .subscribeOn(io())
                     .observeOn(mainThread());
               }
             },
-            new Action2<FunPicFragment, Response>() {
-              @Override public void call(FunPicFragment funPicFragment, Response funPicResponse) {
-                Iterator<Data> iterable = funPicResponse.result.data.iterator();
+            new Action2<FunPicFragment, MyResponse>() {
+              @Override public void call(FunPicFragment funPicFragment, MyResponse funPicResponse) {
+                Iterator<Data> iterable = funPicResponse.data.iterator();
                 while (iterable.hasNext()) {
                   if(mServerBlackList.contains(iterable.next().hashId)) {
                     iterable.remove();
                   }
                 }
-                funPicFragment.onItemsNext(funPicResponse.result.data);
+                funPicFragment.onItemsNext(funPicResponse.data);
               }
             },
             new Action2<FunPicFragment, Throwable>() {

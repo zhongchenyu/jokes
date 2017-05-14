@@ -85,6 +85,9 @@ public class MainActivity extends NucleusAppCompatActivity {
 
   }
 
+  public JokeFragment getJokeFragment(){
+    return jokeFragment;
+  }
   public ShareWindow getShareWindow() {
     return shareWindow;
   }

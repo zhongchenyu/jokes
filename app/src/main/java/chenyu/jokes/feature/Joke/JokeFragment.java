@@ -1,11 +1,11 @@
 package chenyu.jokes.feature.Joke;
 
 import android.os.Bundle;
+import android.widget.Toast;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollFragment;
+import chenyu.jokes.model.MyResponse;
 import chenyu.jokes.presenter.JokePresenter;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import nucleus.factory.RequiresPresenter;
 
 /**
@@ -13,22 +13,48 @@ import nucleus.factory.RequiresPresenter;
  */
 
 @RequiresPresenter(JokePresenter.class)
-public class JokeFragment extends BaseScrollFragment<JokeAdapter,JokePresenter> {
+public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter> {
 
   public static JokeFragment create() {
     JokeFragment jokeFragment = new JokeFragment();
     return jokeFragment;
   }
 
-  @Override public void onCreate(Bundle state){
+  @Override public void onCreate(Bundle state) {
     super.onCreate(state);
     setAdapter(new JokeAdapter());
-
   }
 
- @Override public int getLayout() {
-  return R.layout.fragment_joke;
-}
+  @Override public int getLayout() {
+    return R.layout.fragment_joke;
+  }
 
+  public void onUP(int jokeId, int position) {
+    getPresenter().up(jokeId, position);
+  }
 
+  public void onDown(int jokeId, int position) {
+    getPresenter().down(jokeId, position);
+  }
+
+  public void onCollect(int jokeId, int position) {
+    getPresenter().collect(jokeId, position);
+  }
+  public void onUPSuccess(int position, MyResponse response) {
+    mAdapter.changeAttitude(position, JokeAdapter.ACTION_UP);
+    mAdapter.notifyDataSetChanged();
+    Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
+  }
+
+  public void onDownSuccess(int position, MyResponse response) {
+    mAdapter.changeAttitude(position, JokeAdapter.ACTION_DOWN);
+    mAdapter.notifyDataSetChanged();
+    Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
+  }
+
+  public void onCollectSuccess(int position, MyResponse response) {
+    mAdapter.changeAttitude(position, JokeAdapter.ACTION_COLLECT);
+    mAdapter.notifyDataSetChanged();
+    Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
+  }
 }

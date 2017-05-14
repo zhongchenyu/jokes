@@ -11,21 +11,41 @@
     <TextView android:id="@+id/content"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:textSize="16sp" />
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:layout_marginTop="4dp">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" >
       <TextView android:id="@+id/time"
           android:layout_width="wrap_content" android:layout_height="wrap_content"
-          android:textSize="12sp"
-          android:layout_alignParentStart="true"/>
-      <TextView android:id="@+id/share"
-          android:layout_width="wrap_content" android:layout_height="wrap_content"
-          android:layout_alignParentEnd="true"
-          android:textSize="12sp" android:clickable="true"
-          android:text="分享" android:layout_centerVertical="true"/>
-      <ImageButton android:id="@+id/share_icon"
-          android:layout_width="wrap_content" android:layout_height="wrap_content"
-          android:layout_toStartOf="@+id/share" android:src="@drawable/ic_share_24"
-          android:layout_marginEnd="8dp" android:background="@android:color/transparent"/>
+          android:textSize="12sp" android:layout_alignParentStart="true"
+          android:text="时间" android:layout_centerVertical="true"/>
+      <LinearLayout
+          android:layout_width="match_parent" android:layout_height="wrap_content"
+          android:gravity="end" android:orientation="horizontal"
+          android:layout_alignParentEnd="true">
+        <TextView android:id="@+id/up"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="顶" android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"/>
+        <TextView android:id="@+id/down"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="踩" android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"/>
+        <TextView android:id="@+id/collect"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="收藏" android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"/>
+        <TextView android:id="@+id/comment"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="评论" android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"/>
+        <ImageButton android:id="@+id/share_icon"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/ic_share_24" android:gravity="center_vertical"
+            android:layout_marginEnd="8dp" android:background="@android:color/transparent"
+            android:layout_marginStart="8dp"/>
+      </LinearLayout>
+
+
     </RelativeLayout>
 
   </LinearLayout>

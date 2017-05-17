@@ -1,7 +1,9 @@
 package chenyu.jokes.feature.more;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +20,22 @@ import butterknife.OnClick;
 import chenyu.jokes.R;
 import chenyu.jokes.app.AccountManager;
 import chenyu.jokes.app.App;
+import chenyu.jokes.database.JokeDataBaseAPI;
+import chenyu.jokes.feature.MyCollection.MyCollectionActivity;
 import chenyu.jokes.model.Account;
+import chenyu.jokes.model.JokeCollection;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Token;
 import chenyu.jokes.model.User;
 import chenyu.jokes.presenter.MorePresenter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import nucleus.factory.RequiresPresenter;
 import nucleus.view.NucleusSupportFragment;
+import rx.functions.Action1;
+
+import static rx.android.schedulers.AndroidSchedulers.mainThread;
+import static rx.schedulers.Schedulers.io;
 
 @RequiresPresenter(MorePresenter.class)
 public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
@@ -36,12 +47,14 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
   @BindView(R.id.register) Button mBtnRegister;
   @BindView(R.id.notice) Button mBtnNotice;
   @BindView(R.id.notice_content) TextView mTxtNotice;
+  @BindView(R.id.get_collection) Button mBtnCollection;
+  @BindView(R.id.joke_collection) TextView mTxtCollection;
 
+  private LocalBroadcastManager localBroadcastManager;
 
   public static MoreFragment create() {
     return new MoreFragment();
   }
-
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -53,17 +66,17 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_more, container, false);
     ButterKnife.bind(this, view);
-
-    if(AccountManager.create().getToken() != "") {
+    localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+    if (AccountManager.create().getToken() != "") {
       getPresenter().getUserInfo();
     }
     return view;
   }
 
-
   public void onRegisterSuccess(Token token) {
     Toast.makeText(getContext(), "注册成功，请登录", Toast.LENGTH_SHORT).show();
   }
+
   public void onLoginSuccess(Account account) {
     AccountManager.create().setAccount(account);
     mTxtName.setVisibility(View.VISIBLE);
@@ -74,7 +87,12 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
     mBtnNotice.setEnabled(true);
+    mBtnCollection.setEnabled(true);
+
+    Intent intent = new Intent("chenyu.jokes.account.login");
+    localBroadcastManager.sendBroadcast(intent);
   }
+
   public void onGetUserSuccess(User user) {
     AccountManager.create().setUser(user);
     mTxtName.setVisibility(View.VISIBLE);
@@ -85,10 +103,13 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
     mBtnNotice.setEnabled(true);
+    mBtnCollection.setEnabled(true);
   }
+
   public void onGetNoticeSuccess(Notice notice) {
     mTxtNotice.setText(notice.content);
   }
+
   public void onError(Throwable throwable) {
     Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
   }
@@ -105,9 +126,13 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         mBtnLogout.setVisibility(View.INVISIBLE);
         mBtnRegister.setVisibility(View.VISIBLE);
         mBtnNotice.setEnabled(false);
+        mBtnCollection.setEnabled(false);
         mTxtName.setVisibility(View.INVISIBLE);
         mTxtEmail.setVisibility(View.INVISIBLE);
         mTxtNotice.setText("");
+
+        Intent intent = new Intent("chenyu.jokes.account.logout");
+        localBroadcastManager.sendBroadcast(intent);
         break;
       case R.id.register:
         showRegisterDialog();
@@ -147,7 +172,7 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
             String password = edtPassword.getText().toString().trim();
             String email = edtEmail.getText().toString().trim();
             String password_confirm = edtPasswordConfirm.getText().toString().trim();
-            if(! password.equals(password_confirm) ) {
+            if (!password.equals(password_confirm)) {
               Toast.makeText(getContext(), "两次输入密码不一致", Toast.LENGTH_SHORT).show();
               return;
             }
@@ -171,7 +196,7 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
       @Override public void onClick(DialogInterface dialog, int which) {
         String password = edtPassword.getText().toString().trim();
         String email = edtEmail.getText().toString().trim();
-        getPresenter().login( email, password);
+        getPresenter().login(email, password);
       }
     });
 
@@ -182,5 +207,24 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     });
 
     builder.show();
+  }
+
+  @OnClick(R.id.get_collection) public void getCollection(View view) {
+    MyCollectionActivity.startActivity(getContext());
+    /*
+    JokeDataBaseAPI.create().getJoke().subscribeOn(io()).observeOn(mainThread())
+        .subscribe(new Action1<ArrayList<JokeCollection>>() {
+          @Override public void call(ArrayList<JokeCollection> jokeCollections) {
+            mTxtCollection.setText("");
+            Iterator iterator = jokeCollections.iterator();
+            while (iterator.hasNext()) {
+              JokeCollection jokeCollection = (JokeCollection)iterator.next();
+              mTxtCollection.append(String.valueOf(jokeCollection.id)+"\n");
+              mTxtCollection.append(String.valueOf(jokeCollection.jokeId)+"\n");
+              mTxtCollection.append(jokeCollection.content+"\n\n");
+            }
+          }
+        });
+        */
   }
 }

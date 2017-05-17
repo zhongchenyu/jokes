@@ -40,6 +40,7 @@ public class AccountManager {
 
   public Account getAccount() {
     Account account = new Account();
+    account.user = new User();
     account.token = sp.getString("token", "");
     account.user.id = sp.getString("userId", "");
     account.user.name = sp.getString("userEmail", "");

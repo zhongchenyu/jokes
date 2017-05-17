@@ -1,13 +1,16 @@
 package chenyu.jokes.network;
 
 import android.support.annotation.Nullable;
-import chenyu.jokes.app.App;
 import chenyu.jokes.model.Account;
+import chenyu.jokes.model.CommentResponse;
+import chenyu.jokes.model.Comment;
 import chenyu.jokes.model.MyResponse;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Response;
+import chenyu.jokes.model.SendCommentResponse;
 import chenyu.jokes.model.Token;
 import chenyu.jokes.model.User;
+import java.util.ArrayList;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -61,5 +64,17 @@ public interface ServerAPI {
       @Header("Authorization") String token,
       @Path("joke_id") int jokeId,
       @Path("action") String action
+  );
+
+  @GET("my_jokes/{joke_id}/comments") Observable<CommentResponse> getComment(
+      @Header("Authorization") String token,
+      @Path("joke_id") int jokeId,
+      @Query("page") int page
+  );
+
+  @FormUrlEncoded @POST("my_jokes/{joke_id}/comments") Observable<SendCommentResponse> sendComment(
+      @Header("Authorization") String token,
+      @Path("joke_id") int jokeId,
+      @Field("comment") String comment
   );
 }

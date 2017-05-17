@@ -2,6 +2,7 @@ package chenyu.jokes.feature.Joke;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chenyu.jokes.R;
+import chenyu.jokes.app.AccountManager;
 import chenyu.jokes.base.BaseScrollAdapter;
 import chenyu.jokes.constant.AttitudeType;
+import chenyu.jokes.database.JokeDataBaseAPI;
+import chenyu.jokes.feature.comment.JokeCommentActivity;
 import chenyu.jokes.feature.main.MainActivity;
 import chenyu.jokes.model.Data;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -99,6 +103,10 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
     }
 
     @OnClick({R.id.up, R.id.down, R.id.comment, R.id.collect}) public void onClick(View view) {
+      if(TextUtils.isEmpty(AccountManager.create().getToken())) {
+        Toast.makeText(itemView.getContext(), "需要先登录", Toast.LENGTH_SHORT).show();
+        return;
+      }
       switch (view.getId()) {
         case R.id.up:
 
@@ -108,6 +116,7 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
           jokeFragment.onAttitude(jokeId, getAdapterPosition(), AttitudeType.DOWN);
           break;
         case R.id.comment:
+          JokeCommentActivity.startActivity(view.getContext(), mItems.get(getAdapterPosition()));
           Toast.makeText(itemView.getContext(), "comment", Toast.LENGTH_SHORT).show();
           break;
         case R.id.collect:
@@ -170,12 +179,14 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
     }
   }
   private void toggleCollect(int position) {
-    if (mItems.get(position).my_collected) {
+    if (mItems.get(position).my_collected) {//取消收藏
       mItems.get(position).my_collected = false;
       mItems.get(position).collect_amount --;
-    } else {
+      JokeDataBaseAPI.create().deleteJokeByJokeId(mItems.get(position).id);
+    } else { //添加收藏
       mItems.get(position).my_collected = true;
       mItems.get(position).collect_amount ++;
+      JokeDataBaseAPI.create().insertJoke(mItems.get(position));
     }
   }
 }

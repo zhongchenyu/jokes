@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_margin="8dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="8dp" android:background="@drawable/shape_card">
+  <TextView android:id="@+id/content"
+      android:layout_width="0dp" android:layout_height="wrap_content"
+      android:textSize="20dp" android:layout_weight="1"/>
+  <ImageButton android:id="@+id/cancel"
+      android:layout_width="24dp" android:layout_height="24dp"
+      android:textSize="16dp" android:layout_gravity="center_vertical"
+      android:layout_marginStart="8dp" android:src="@drawable/ic_cancle"
+      android:background="@android:color/transparent"
+      android:scaleType="centerInside" android:contentDescription="cancel_collection"/>
+</LinearLayout>

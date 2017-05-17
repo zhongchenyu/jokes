@@ -54,10 +54,16 @@ public abstract class BaseScrollAdapter<Model, VH extends RecyclerView.ViewHolde
     mItems.addAll(items);
   }
 
+  public void add(Model item) {
+    mItems.add(item);
+  }
   public void clear() {
     mItems.clear();
   }
 
+  public void remove(int index) {
+    mItems.remove(index);
+  }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public ViewHolder(View view) {

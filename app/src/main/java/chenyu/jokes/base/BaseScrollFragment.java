@@ -14,37 +14,41 @@ import butterknife.ButterKnife;
 import chenyu.jokes.R;
 import java.util.List;
 import nucleus.view.NucleusSupportFragment;
+
 /**
  * Created by chenyu on 2017/3/6.
  */
 
-public  class BaseScrollFragment<Adapter extends BaseScrollAdapter,P extends BaseScrollPresenter> extends NucleusSupportFragment<P>{
+public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends BaseScrollPresenter>
+    extends NucleusSupportFragment<P> {
 
   @BindView(R.id.recyclerView) public RecyclerView recyclerView;
   @BindView(R.id.refreshLayout) public SwipeRefreshLayout refreshLayout;
   private int currentPage = 1;
   private int previousTotal = 0;
   private boolean loading = true;
+  private boolean noMoreData = false;
   protected Adapter mAdapter;
+  protected SwipeRefreshLayout.OnRefreshListener listener;
 
-public void setAdapter(Adapter adapter) {
-  mAdapter = adapter;
-}
+  public void setAdapter(Adapter adapter) {
+    mAdapter = adapter;
+  }
 
   //子类必须执行
-  public int getLayout(){
+  public int getLayout() {
     return 0;
   }
 
-@Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
-  View view = inflater.inflate(getLayout(), container, false);
-  return view;
-}
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(getLayout(), container, false);
+    return view;
+  }
 
-  @Override public void onViewCreated(View view,Bundle state) {
-    super.onViewCreated(view,state);
-    ButterKnife.bind(this,view);
+  @Override public void onViewCreated(View view, Bundle state) {
+    super.onViewCreated(view, state);
+    ButterKnife.bind(this, view);
     recyclerView.setAdapter(mAdapter);
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(layoutManager);
@@ -54,7 +58,7 @@ public void setAdapter(Adapter adapter) {
     super.onResume();
 
     refreshLayout.setColorSchemeResources(R.color.colorPrimary);
-    refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    listener = new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
         mAdapter.clear();
         getPresenter().request(1);
@@ -63,26 +67,30 @@ public void setAdapter(Adapter adapter) {
         mAdapter.notifyDataSetChanged();
         refreshLayout.setRefreshing(false);
       }
-    });
+    };
+    refreshLayout.setOnRefreshListener(listener);
 
     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-
+        if (noMoreData) {
+          return;
+        }
         int visibleItemCount = recyclerView.getChildCount();
         int totalItemCount = recyclerView.getAdapter().getItemCount();
-        int firstVisibleItem =( (LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        int firstVisibleItem =
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
-        if(loading) {
-          if(totalItemCount > previousTotal) {
+        if (loading) {
+          if (totalItemCount > previousTotal) {
             loading = false;
             previousTotal = totalItemCount;
           }
         }
-        if(!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem) {
+        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem) {
 
           loading = true;
-          currentPage ++;
+          currentPage++;
           onLoadMore();
           previousTotal = totalItemCount;
         }
@@ -91,6 +99,13 @@ public void setAdapter(Adapter adapter) {
   }
 
   public void onItemsNext(List items) {
+
+    if (items.isEmpty()) {
+      noMoreData = true;
+      loading = false;
+      return;
+    }
+
     mAdapter.addAll(items);
     mAdapter.notifyDataSetChanged();
     loading = false;
@@ -98,10 +113,10 @@ public void setAdapter(Adapter adapter) {
 
   public void onItemsError(Throwable throwable) {
     Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-    Log.d("onItemError",throwable.getMessage());
+    Log.d("onItemError", throwable.getMessage());
   }
 
-  public void onLoadMore(){
+  public void onLoadMore() {
     getPresenter().request(currentPage);
   }
 

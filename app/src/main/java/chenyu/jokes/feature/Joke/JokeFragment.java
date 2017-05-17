@@ -1,6 +1,11 @@
 package chenyu.jokes.feature.Joke;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollFragment;
@@ -15,6 +20,9 @@ import nucleus.factory.RequiresPresenter;
 
 @RequiresPresenter(JokePresenter.class)
 public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter> {
+  LocalBroadcastManager localBroadcastManager;
+  IntentFilter intentFilter;
+  LocalReceiver localReceiver;
 
   public static JokeFragment create() {
     JokeFragment jokeFragment = new JokeFragment();
@@ -24,6 +32,17 @@ public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter>
   @Override public void onCreate(Bundle state) {
     super.onCreate(state);
     setAdapter(new JokeAdapter());
+    intentFilter = new IntentFilter();
+    intentFilter.addAction("chenyu.jokes.account.logout");
+    intentFilter.addAction("chenyu.jokes.account.login");
+    localReceiver = new LocalReceiver();
+    localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+    localBroadcastManager.registerReceiver(localReceiver, intentFilter);
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    localBroadcastManager.unregisterReceiver(localReceiver);
   }
 
   @Override public int getLayout() {
@@ -45,6 +64,13 @@ public class JokeFragment extends BaseScrollFragment<JokeAdapter, JokePresenter>
     mAdapter.changeAttitude(position, attitudeType);
     mAdapter.notifyDataSetChanged();
     Toast.makeText(getContext(), response.message, Toast.LENGTH_SHORT).show();
+  }
+
+  class LocalReceiver extends BroadcastReceiver{
+    @Override public void onReceive(Context context, Intent intent) {
+      listener.onRefresh();
+      //Toast.makeText(context, "收到广播", Toast.LENGTH_SHORT).show();
+    }
   }
 /*
   public void onDownSuccess(int position, MyResponse response) {

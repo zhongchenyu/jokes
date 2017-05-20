@@ -24,51 +24,17 @@ import static rx.schedulers.Schedulers.trampoline;
  */
 
 public class JokePresenter extends BaseScrollPresenter<JokeFragment, Data> {
-  //private int mPage ;
+
   private int mJokeId;
   private int mPosition;
-  private static final int GET_JOKES = 1;
-  private static final int UP = 2;
-  private static final int DOWN = 3;
-  private static final int COLLECT = 4;
-  private static final int COMMENT = 5;
+
   private static final int ATTITUDE_START = 100;
   private AttitudeType mAttitudeType ;
-  private Func1 errorCodeProcess = new Func1<MyResponse, Observable<ArrayList<Data>>>() {
-    @Override public Observable<ArrayList<Data>> call(MyResponse response) {
-      //if(response.errorCode !=0) {
-      //  return Observable.error(new Throwable(response.reason));
-      //}
-      return Observable.just(response.data);
-    }
-  };
 
   @Override protected void onCreate(Bundle savedState) {
 
     super.onCreate(savedState);
-    /*
-    restartableFirst(GET_JOKES,
-        new Func0<Observable<ArrayList<Data>>>() {
-          @Override public Observable<ArrayList<Data>> call() {
-            return App.getServerAPI()
-                .getJokes(getSendToken(), mPage)
-                .subscribeOn(io())
-                .observeOn(mainThread())
-                .flatMap(errorCodeProcess);
-          }
-        },
-        new Action2<JokeFragment, ArrayList<Data>>() {
-          @Override public void call(JokeFragment jokeFragment, ArrayList<Data> data) {
-            jokeFragment.onItemsNext(data);
-          }
-        },
-        new Action2<JokeFragment, Throwable>() {
-          @Override public void call(JokeFragment jokeFragment, Throwable throwable) {
-            jokeFragment.onItemsError(throwable);
-          }
-        }
-    );
-*/
+
     restartableFirst(ATTITUDE_START,
         new Func0<Observable<MyResponse>>() {
           @Override public Observable<MyResponse> call() {
@@ -90,7 +56,6 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment, Data> {
         }
     );
 
-    //loadPage(mPage);
   }
 
   @Override protected Observable<ArrayList<Data>> loadPageRequest() {
@@ -103,12 +68,6 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment, Data> {
         });
   }
 
-  /*
-    @Override public void request(int page) {
-      mPage = page;
-      start(GET_JOKES);
-    }
-  */
   public void attitude(int jokeId, int position, AttitudeType attitudeType) {
     mJokeId = jokeId;
     mPosition = position;
@@ -116,15 +75,4 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment, Data> {
     start(ATTITUDE_START);
   }
 
-  public void down(int jokeId, int position) {
-    mJokeId = jokeId;
-    mPosition = position;
-    start(DOWN);
-  }
-
-  public void collect(int jokeId, int position) {
-    mJokeId = jokeId;
-    mPosition = position;
-    start(COLLECT);
-  }
 }

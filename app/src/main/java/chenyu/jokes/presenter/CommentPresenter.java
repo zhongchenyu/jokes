@@ -30,28 +30,6 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity, C
   @Override protected void onCreate(Bundle savedState) {
     super.onCreate(savedState);
 
-/*
-    restartableFirst(GET_COMMENT,
-        new Func0<Observable<CommentResponse>>() {
-          @Override public Observable<CommentResponse> call() {
-            return App.getServerAPI().getComment(getSendToken(), mJokeId,mPage)
-                .subscribeOn(io())
-                .observeOn(mainThread());
-          }
-        },
-        new Action2<JokeCommentActivity, CommentResponse>() {
-          @Override public void call(JokeCommentActivity jokeCommentActivity,
-              CommentResponse arrayListBaseResponse) {
-            jokeCommentActivity.onItemsNext(arrayListBaseResponse.data);
-          }
-        },
-        new Action2<JokeCommentActivity, Throwable>() {
-          @Override public void call(JokeCommentActivity jokeCommentActivity, Throwable throwable) {
-            jokeCommentActivity.onItemsError(throwable);
-          }
-        }
-    );
-    */
     restartableFirst(SEND_COMMENT,
         new Func0<Observable<SendCommentResponse>>() {
           @Override public Observable<SendCommentResponse> call() {
@@ -84,18 +62,12 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity, C
         });
   }
 /*
-  @Override public void request(int page) {
-    mPage = page;
-    start(GET_COMMENT);
-  }
-*/
-
   public void getComment(int jokeId, int page) {
     mPage = page;
     mJokeId = jokeId;
     start(GET_COMMENT);
   }
-
+*/
   public void setJokeId(int jokeId) {
     mJokeId = jokeId;
   }

@@ -23,8 +23,8 @@ import static rx.schedulers.Schedulers.trampoline;
  * Created by chenyu on 2017/3/3.
  */
 
-public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
-  private int mPage = 1;
+public class JokePresenter extends BaseScrollPresenter<JokeFragment, Data> {
+  //private int mPage ;
   private int mJokeId;
   private int mPosition;
   private static final int GET_JOKES = 1;
@@ -46,6 +46,7 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
   @Override protected void onCreate(Bundle savedState) {
 
     super.onCreate(savedState);
+    /*
     restartableFirst(GET_JOKES,
         new Func0<Observable<ArrayList<Data>>>() {
           @Override public Observable<ArrayList<Data>> call() {
@@ -67,7 +68,7 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
           }
         }
     );
-
+*/
     restartableFirst(ATTITUDE_START,
         new Func0<Observable<MyResponse>>() {
           @Override public Observable<MyResponse> call() {
@@ -88,56 +89,26 @@ public class JokePresenter extends BaseScrollPresenter<JokeFragment> {
           }
         }
     );
-/*
-    restartableFirst(DOWN,
-        new Func0<Observable<MyResponse>>() {
-          @Override public Observable<MyResponse> call() {
-            return App.getServerAPI()
-                .attitude("Bearer " + AccountManager.create().getToken(), mJokeId, "down")
-                .subscribeOn(io())
-                .observeOn(mainThread());
-          }
-        },
-        new Action2<JokeFragment, MyResponse>() {
-          @Override public void call(JokeFragment jokeFragment, MyResponse myResponse) {
-            jokeFragment.onDownSuccess(mPosition, myResponse);
-          }
-        },
-        new Action2<JokeFragment, Throwable>() {
-          @Override public void call(JokeFragment jokeFragment, Throwable throwable) {
-            jokeFragment.onItemsError(throwable);
-          }
-        }
-    );
-    restartableFirst(COLLECT,
-        new Func0<Observable<MyResponse>>() {
-          @Override public Observable<MyResponse> call() {
-            return App.getServerAPI()
-                .attitude("Bearer " + AccountManager.create().getToken(), mJokeId, "collection")
-                .subscribeOn(io())
-                .observeOn(mainThread());
-          }
-        },
-        new Action2<JokeFragment, MyResponse>() {
-          @Override public void call(JokeFragment jokeFragment, MyResponse myResponse) {
-            jokeFragment.onCollectSuccess(mPosition, myResponse);
-          }
-        },
-        new Action2<JokeFragment, Throwable>() {
-          @Override public void call(JokeFragment jokeFragment, Throwable throwable) {
-            jokeFragment.onItemsError(throwable);
-          }
-        }
-    );
-    */
-    request(mPage);
+
+    //loadPage(mPage);
   }
 
-  @Override public void request(int page) {
-    mPage = page;
-    start(GET_JOKES);
+  @Override protected Observable<ArrayList<Data>> loadPageRequest() {
+    return App.getServerAPI()
+        .getJokes(getSendToken(), mPage)
+        .flatMap(new Func1<MyResponse, Observable<ArrayList<Data>>>() {
+          @Override public Observable<ArrayList<Data>> call(MyResponse response) {
+            return Observable.just(response.data);
+          }
+        });
   }
 
+  /*
+    @Override public void request(int page) {
+      mPage = page;
+      start(GET_JOKES);
+    }
+  */
   public void attitude(int jokeId, int position, AttitudeType attitudeType) {
     mJokeId = jokeId;
     mPosition = position;

@@ -21,7 +21,8 @@ import nucleus.factory.RequiresPresenter;
 import org.parceler.Parcels;
 
 @RequiresPresenter(CommentPresenter.class)
-public class JokeCommentActivity extends BaseScrollActivity<CommentAdapter, CommentPresenter> {
+public class JokeCommentActivity
+    extends BaseScrollActivity<CommentAdapter, CommentPresenter, Comment> {
   private final static String ARGUMENT_JOKE = "argument_joke";
   private Data joke;
   @BindView(R.id.content) TextView jokeContent;
@@ -39,15 +40,17 @@ public class JokeCommentActivity extends BaseScrollActivity<CommentAdapter, Comm
     return R.layout.activity_joke_comment;
   }
 
+  @Override public CommentAdapter getAdapter() {
+    return new CommentAdapter();
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    setAdapter(new CommentAdapter());
     super.onCreate(savedInstanceState);
 
     joke = Parcels.unwrap(getIntent().getParcelableExtra(ARGUMENT_JOKE));
     jokeContent.setText(joke.getContent());
-
-    getPresenter().getComment(getJokeId(), 1);
+    getPresenter().setJokeId(getJokeId());
 
     inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
   }

@@ -30,11 +30,6 @@ import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 
 public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHolder> {
 
-  public static final int ACTION_UP = 1;
-  public static final int ACTION_DOWN = 2;
-  public static final int ACTION_COLLECT = 3;
-  public static final int ACTION_COMMENT = 4;
-
   @Override public int getLayout() {
     return R.layout.item_joke;
   }
@@ -117,14 +112,12 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
           break;
         case R.id.comment:
           JokeCommentActivity.startActivity(view.getContext(), mItems.get(getAdapterPosition()));
-          Toast.makeText(itemView.getContext(), "comment", Toast.LENGTH_SHORT).show();
           break;
         case R.id.collect:
           jokeFragment.onAttitude(jokeId, getAdapterPosition(),AttitudeType.COLLECT);
           break;
       }
     }
-
 
   }
 

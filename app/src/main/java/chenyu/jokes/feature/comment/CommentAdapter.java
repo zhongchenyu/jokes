@@ -40,6 +40,5 @@ public class CommentAdapter extends BaseScrollAdapter<Comment, CommentAdapter.Co
       super(view);
       ButterKnife.bind(this, view);
     }
-
   }
 }

@@ -12,15 +12,15 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
-import java.util.List;
+import java.util.ArrayList;
 import nucleus.view.NucleusSupportFragment;
 
 /**
  * Created by chenyu on 2017/3/6.
  */
 
-public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends BaseScrollPresenter>
-    extends NucleusSupportFragment<P> {
+public abstract class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends BaseScrollPresenter, M>
+    extends NucleusSupportFragment<P> implements BaseRxView<M> {
 
   @BindView(R.id.recyclerView) public RecyclerView recyclerView;
   @BindView(R.id.refreshLayout) public SwipeRefreshLayout refreshLayout;
@@ -31,14 +31,9 @@ public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends Bas
   protected Adapter mAdapter;
   protected SwipeRefreshLayout.OnRefreshListener listener;
 
-  public void setAdapter(Adapter adapter) {
-    mAdapter = adapter;
-  }
+  public abstract int getLayout();
 
-  //子类必须执行
-  public int getLayout() {
-    return 0;
-  }
+  public abstract Adapter getAdapter();
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -49,19 +44,20 @@ public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends Bas
   @Override public void onViewCreated(View view, Bundle state) {
     super.onViewCreated(view, state);
     ButterKnife.bind(this, view);
+    mAdapter = getAdapter();
     recyclerView.setAdapter(mAdapter);
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(layoutManager);
+    initListener();
+    getPresenter().loadPage(1);
   }
 
-  @Override public void onResume() {
-    super.onResume();
-
+  private void initListener() {
     refreshLayout.setColorSchemeResources(R.color.colorPrimary);
     listener = new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
         mAdapter.clear();
-        getPresenter().request(1);
+        getPresenter().loadPage(1);
         currentPage = 1;
         previousTotal = 0;
         mAdapter.notifyDataSetChanged();
@@ -76,18 +72,17 @@ public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends Bas
         if (noMoreData) {
           return;
         }
-        int visibleItemCount = recyclerView.getChildCount();
+        //int visibleItemCount = recyclerView.getChildCount();
         int totalItemCount = recyclerView.getAdapter().getItemCount();
-        int firstVisibleItem =
-            ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
+        int lastVisibleItem =
+            ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
         if (loading) {
           if (totalItemCount > previousTotal) {
             loading = false;
             previousTotal = totalItemCount;
           }
         }
-        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem) {
+        if (!loading && lastVisibleItem >= totalItemCount - 1) {
 
           loading = true;
           currentPage++;
@@ -98,7 +93,7 @@ public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends Bas
     });
   }
 
-  public void onItemsNext(List items) {
+  @Override public void onItemsNext(ArrayList<M> items) {
 
     if (items.isEmpty()) {
       noMoreData = true;
@@ -111,13 +106,13 @@ public class BaseScrollFragment<Adapter extends BaseScrollAdapter, P extends Bas
     loading = false;
   }
 
-  public void onItemsError(Throwable throwable) {
+  @Override public void onItemsError(Throwable throwable) {
     Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
     Log.d("onItemError", throwable.getMessage());
   }
 
   public void onLoadMore() {
-    getPresenter().request(currentPage);
+    getPresenter().loadPage(currentPage);
   }
 
   @Override public void onDestroyView() {

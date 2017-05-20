@@ -9,7 +9,7 @@
       android:layout_width="match_parent" android:layout_height="wrap_content"
       android:layout_marginTop="16dp" android:background="@android:color/white">
     <ImageView android:id="@+id/avatar"
-        android:layout_width="80dp" android:layout_height="80dp"
+        android:layout_width="48dp" android:layout_height="48dp"
         android:layout_alignParentStart="true" app:srcCompat="@drawable/ic_36"
         android:layout_marginStart="16dp" android:layout_marginTop="16dp"
         android:layout_centerVertical="true" android:adjustViewBounds="false"/>
@@ -48,7 +48,7 @@
         android:layout_alignParentEnd="true" android:layout_centerVertical="true"/>
   </RelativeLayout>
 
-  <LinearLayout
+  <LinearLayout android:visibility="gone"
       android:layout_width="match_parent" android:layout_height="wrap_content"
       android:orientation="horizontal" android:layout_marginTop="8dp"
       android:background="@android:color/white">

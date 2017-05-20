@@ -14,6 +14,7 @@ import java.util.Iterator;
 import rx.Observable;
 import rx.functions.Action2;
 import rx.functions.Func0;
+import rx.functions.Func1;
 
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
 import static rx.schedulers.Schedulers.io;
@@ -22,68 +23,15 @@ import static rx.schedulers.Schedulers.io;
  * Created by chenyu on 2017/3/7.
  */
 
-public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment>{
+public class FunPicPresenter extends BaseScrollPresenter<FunPicFragment, Data>{
 
-  //private String time = String.valueOf(System.currentTimeMillis()/1000);
-
-  private int mPage = 1;
-  private ArrayList<String> mServerBlackList = new ArrayList<>();
-  @Override protected void onCreate(Bundle savedState) {
-    super.onCreate(savedState);
-
-    restartableFirst(0,
-        new Func0<Observable<Response>>() {
-          @Override public Observable<Response> call() {
-            return App.getServerAPI().getBlackList().subscribeOn(io()).observeOn(mainThread());
+  @Override protected Observable<ArrayList<Data>> loadPageRequest() {
+    return App.getServerAPI()
+        .getFunPic(getSendToken(), mPage)
+        .flatMap(new Func1<MyResponse, Observable<ArrayList<Data>>>() {
+          @Override public Observable<ArrayList<Data>> call(MyResponse myResponse) {
+            return Observable.just(myResponse.data);
           }
-        },
-        new Action2<FunPicFragment, Response>() {
-          @Override
-          public void call(FunPicFragment funPicFragment, Response response) {
-            for (int i=0;i<response.result.data.size();i++) {
-              mServerBlackList.add(response.result.data.get(i).hashId);
-            }
-            Log.d("FunPicPresenter", "mServerBlackList: " + mServerBlackList.toString());
-          }
-        },
-        new Action2<FunPicFragment, Throwable>() {
-          @Override public void call(FunPicFragment funPicFragment, Throwable throwable) {
-            funPicFragment.onItemsError(throwable);
-          }
-        }
-    );
-
-        restartableFirst(1,
-            new Func0<Observable<MyResponse>>() {
-              @Override public Observable<MyResponse> call() {
-                return App.getServerAPI()
-                    .getFunPic("Bearer " + AccountManager.create().getToken(), mPage)
-                    .subscribeOn(io())
-                    .observeOn(mainThread());
-              }
-            },
-            new Action2<FunPicFragment, MyResponse>() {
-              @Override public void call(FunPicFragment funPicFragment, MyResponse funPicResponse) {
-                Iterator<Data> iterable = funPicResponse.data.iterator();
-                while (iterable.hasNext()) {
-                  if(mServerBlackList.contains(iterable.next().hashId)) {
-                    iterable.remove();
-                  }
-                }
-                funPicFragment.onItemsNext(funPicResponse.data);
-              }
-            },
-            new Action2<FunPicFragment, Throwable>() {
-              @Override public void call(FunPicFragment funPicFragment, Throwable throwable) {
-                funPicFragment.onItemsError(throwable);
-              }
-            }
-        );
-    start(0);
-    request(1);
-  }
-  @Override public void request(int page) {
-    mPage = page;
-    start(1);
+        });
   }
 }

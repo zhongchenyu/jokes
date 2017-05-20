@@ -13,12 +13,13 @@ import chenyu.jokes.base.BaseScrollAdapter;
 import chenyu.jokes.database.JokeDataBaseAPI;
 import chenyu.jokes.feature.comment.JokeCommentActivity;
 import chenyu.jokes.model.Data;
+import chenyu.jokes.model.JokeCollection;
 import chenyu.jokes.presenter.MyCollectionPresenter;
 import nucleus.factory.RequiresPresenter;
 import org.parceler.Parcels;
 
 @RequiresPresenter(MyCollectionPresenter.class)
-public class MyCollectionActivity extends BaseScrollActivity<MyCollectionAdapter,MyCollectionPresenter> {
+public class MyCollectionActivity extends BaseScrollActivity<MyCollectionAdapter,MyCollectionPresenter, JokeCollection> {
 
   public static void startActivity(Context context) {
     Intent intent = new Intent(context,MyCollectionActivity.class );
@@ -28,13 +29,15 @@ public class MyCollectionActivity extends BaseScrollActivity<MyCollectionAdapter
   @Override public int getLayout() {
     return R.layout.activity_my_collection;
   }
+
+  @Override public MyCollectionAdapter getAdapter() {
+    return new MyCollectionAdapter();
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    setAdapter(new MyCollectionAdapter());
-
     super.onCreate(savedInstanceState);
     needLoadMore = false;
-    getPresenter().request();
   }
 
   public void onCancelCollection(int position,int collectionId) {

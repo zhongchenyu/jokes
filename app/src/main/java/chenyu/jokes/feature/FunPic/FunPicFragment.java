@@ -3,6 +3,7 @@ package chenyu.jokes.feature.FunPic;
 import android.os.Bundle;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollFragment;
+import chenyu.jokes.model.Data;
 import chenyu.jokes.presenter.FunPicPresenter;
 import nucleus.factory.RequiresPresenter;
 
@@ -11,15 +12,14 @@ import nucleus.factory.RequiresPresenter;
  */
 
 @RequiresPresenter(FunPicPresenter.class)
-public class FunPicFragment extends BaseScrollFragment<FunPicAdapter,FunPicPresenter>{
+public class FunPicFragment extends BaseScrollFragment<FunPicAdapter,FunPicPresenter, Data>{
+
   public static FunPicFragment create() {
-    FunPicFragment funPicFragment = new FunPicFragment();
-    return funPicFragment;
+    return new FunPicFragment();
   }
 
-  @Override public void onCreate(Bundle state) {
-    super.onCreate(state);
-    setAdapter(new FunPicAdapter());
+  @Override public FunPicAdapter getAdapter() {
+    return new FunPicAdapter();
   }
 
   @Override public int getLayout() {

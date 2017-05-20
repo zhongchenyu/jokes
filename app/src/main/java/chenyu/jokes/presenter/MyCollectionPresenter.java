@@ -20,7 +20,7 @@ import static rx.schedulers.Schedulers.io;
  * Created by chenyu on 2017/5/17.
  */
 
-public class MyCollectionPresenter extends BaseScrollPresenter<MyCollectionActivity> {
+public class MyCollectionPresenter extends BaseScrollPresenter<MyCollectionActivity, JokeCollection> {
 
   private int jokeId;
   private int position;
@@ -28,7 +28,7 @@ public class MyCollectionPresenter extends BaseScrollPresenter<MyCollectionActiv
 
   @Override protected void onCreate(Bundle savedState) {
     super.onCreate(savedState);
-
+   /*
     restartableFirst(1,
         new Func0<Observable<ArrayList<JokeCollection>>>() {
           @Override public Observable<ArrayList<JokeCollection>> call() {
@@ -43,6 +43,7 @@ public class MyCollectionPresenter extends BaseScrollPresenter<MyCollectionActiv
           }
         }
     );
+    */
     restartableFirst(2,
         new Func0<Observable<MyResponse>>() {
           @Override public Observable<MyResponse> call() {
@@ -71,10 +72,14 @@ public class MyCollectionPresenter extends BaseScrollPresenter<MyCollectionActiv
     start(1);
   }
 
+  @Override protected Observable<ArrayList<JokeCollection>> loadPageRequest() {
+    return JokeDataBaseAPI.create().getJoke();
+  }
+/*
   @Override public void request(int page) {
     request();
   }
-
+*/
   public void cancelCollection(int jokeId, int position, int collectionId) {
     this.jokeId = jokeId;
     this.collectionId = collectionId;

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import rx.Observable;
 import rx.functions.Action2;
 import rx.functions.Func0;
+import rx.functions.Func1;
 
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
 import static rx.schedulers.Schedulers.io;
@@ -19,8 +20,8 @@ import static rx.schedulers.Schedulers.io;
  * Created by chenyu on 2017/5/15.
  */
 
-public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity> {
-  private int mPage;
+public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity, Comment> {
+  //private int mPage;
   private int mJokeId;
   private String mComment;
   private final int GET_COMMENT = 1;
@@ -29,6 +30,7 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity> {
   @Override protected void onCreate(Bundle savedState) {
     super.onCreate(savedState);
 
+/*
     restartableFirst(GET_COMMENT,
         new Func0<Observable<CommentResponse>>() {
           @Override public Observable<CommentResponse> call() {
@@ -49,6 +51,7 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity> {
           }
         }
     );
+    */
     restartableFirst(SEND_COMMENT,
         new Func0<Observable<SendCommentResponse>>() {
           @Override public Observable<SendCommentResponse> call() {
@@ -72,10 +75,20 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity> {
 
   }
 
+  @Override public Observable<ArrayList<Comment>> loadPageRequest() {
+    return App.getServerAPI().getComment(getSendToken(), mJokeId,mPage)
+        .flatMap(new Func1<CommentResponse, Observable<ArrayList<Comment>>>() {
+          @Override public Observable<ArrayList<Comment>> call(CommentResponse commentResponse) {
+            return Observable.just(commentResponse.data);
+          }
+        });
+  }
+/*
   @Override public void request(int page) {
     mPage = page;
     start(GET_COMMENT);
   }
+*/
 
   public void getComment(int jokeId, int page) {
     mPage = page;
@@ -90,4 +103,5 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity> {
     mComment = comment;
     start(SEND_COMMENT);
   }
+
 }

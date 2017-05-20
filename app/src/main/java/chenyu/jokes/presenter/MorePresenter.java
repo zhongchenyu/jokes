@@ -62,6 +62,7 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
         },
         new Action2<MoreFragment, Throwable>() {
           @Override public void call(MoreFragment moreFragment, Throwable throwable) {
+
             moreFragment.onError(throwable);
           }
         }

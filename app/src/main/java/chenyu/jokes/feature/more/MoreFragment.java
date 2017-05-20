@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +24,19 @@ import chenyu.jokes.app.App;
 import chenyu.jokes.database.JokeDataBaseAPI;
 import chenyu.jokes.feature.MyCollection.MyCollectionActivity;
 import chenyu.jokes.model.Account;
+import chenyu.jokes.model.ErrorResponse;
 import chenyu.jokes.model.JokeCollection;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Token;
 import chenyu.jokes.model.User;
 import chenyu.jokes.presenter.MorePresenter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import nucleus.factory.RequiresPresenter;
 import nucleus.view.NucleusSupportFragment;
+import retrofit2.HttpException;
 import rx.functions.Action1;
 
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
@@ -67,7 +72,7 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     View view = inflater.inflate(R.layout.fragment_more, container, false);
     ButterKnife.bind(this, view);
     localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
-    if (AccountManager.create().getToken() != "") {
+    if (!TextUtils.isEmpty(AccountManager.create().getToken())) {
       getPresenter().getUserInfo();
     }
     return view;
@@ -86,7 +91,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogin.setVisibility(View.INVISIBLE);
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
-    mBtnNotice.setEnabled(true);
     mBtnCollection.setEnabled(true);
 
     Intent intent = new Intent("chenyu.jokes.account.login");
@@ -102,7 +106,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogin.setVisibility(View.INVISIBLE);
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
-    mBtnNotice.setEnabled(true);
     mBtnCollection.setEnabled(true);
   }
 
@@ -111,7 +114,22 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
   }
 
   public void onError(Throwable throwable) {
-    Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+    if(throwable instanceof HttpException) {
+      ObjectMapper objectMapper = new ObjectMapper();
+      ErrorResponse errorResponse;
+      HttpException exception = (HttpException) throwable;
+      try {
+          errorResponse = objectMapper.readValue(exception.response().errorBody().string(),
+            ErrorResponse.class);
+        Toast.makeText(getContext(), errorResponse.error, Toast.LENGTH_SHORT).show();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+
   }
 
   @OnClick({R.id.login, R.id.logout, R.id.register, R.id.notice}) public void click(View view) {
@@ -125,11 +143,11 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         mBtnLogin.setVisibility(View.VISIBLE);
         mBtnLogout.setVisibility(View.INVISIBLE);
         mBtnRegister.setVisibility(View.VISIBLE);
-        mBtnNotice.setEnabled(false);
+        //mBtnNotice.setEnabled(false);
         mBtnCollection.setEnabled(false);
         mTxtName.setVisibility(View.INVISIBLE);
         mTxtEmail.setVisibility(View.INVISIBLE);
-        mTxtNotice.setText("");
+        //mTxtNotice.setText("");
 
         Intent intent = new Intent("chenyu.jokes.account.logout");
         localBroadcastManager.sendBroadcast(intent);
@@ -211,20 +229,5 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
 
   @OnClick(R.id.get_collection) public void getCollection(View view) {
     MyCollectionActivity.startActivity(getContext());
-    /*
-    JokeDataBaseAPI.create().getJoke().subscribeOn(io()).observeOn(mainThread())
-        .subscribe(new Action1<ArrayList<JokeCollection>>() {
-          @Override public void call(ArrayList<JokeCollection> jokeCollections) {
-            mTxtCollection.setText("");
-            Iterator iterator = jokeCollections.iterator();
-            while (iterator.hasNext()) {
-              JokeCollection jokeCollection = (JokeCollection)iterator.next();
-              mTxtCollection.append(String.valueOf(jokeCollection.id)+"\n");
-              mTxtCollection.append(String.valueOf(jokeCollection.jokeId)+"\n");
-              mTxtCollection.append(jokeCollection.content+"\n\n");
-            }
-          }
-        });
-        */
   }
 }

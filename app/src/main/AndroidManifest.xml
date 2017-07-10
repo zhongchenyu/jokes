@@ -16,7 +16,19 @@
         android:value="GlideModule"/>
 
     <activity
-        android:name=".feature.main.MainActivity"
+        android:name=".feature.main.MainActivity" android:launchMode="singleTop"
+        android:theme="@style/AppTheme">
+    </activity>
+    <activity
+        android:name=".feature.comment.JokeCommentActivity"
+        android:parentActivityName=".feature.main.MainActivity">
+    </activity>
+    <activity
+        android:name=".feature.myCollection.MyCollectionActivity"
+        android:parentActivityName=".feature.main.MainActivity">
+    </activity>
+    <activity
+        android:name=".feature.splash.SplashActivity"
         android:theme="@style/AppTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -24,9 +36,8 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".feature.comment.JokeCommentActivity">
-    </activity>
-    <activity android:name=".feature.MyCollection.MyCollectionActivity">
+    <activity android:name=".feature.about.AboutActivity"
+    android:parentActivityName=".feature.main.MainActivity">
     </activity>
   </application>
 

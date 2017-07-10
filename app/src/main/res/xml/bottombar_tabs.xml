@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
   <tab id="@+id/tabJoke"
-    title="笑话"/>
+      title="笑话"
+      icon="@drawable/ic_laugh_32"
+  />
   <tab id="@+id/tabFunPic"
-    title="趣图"/>
+      title="趣图"
+      icon="@drawable/ic_image_32"
+  />
   <tab id="@+id/tabMore"
-    title="更多"/>
+      title="更多"
+      icon="@drawable/ic_more_32"
+  />
   <!--tab id="@+id/tabCourseTimetable"
       icon="@drawable/ic_action_course_timetable" title="@string/tab_course_timetable"/-->
 

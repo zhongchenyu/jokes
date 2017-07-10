@@ -1,6 +1,5 @@
 package chenyu.jokes.feature.FunPic;
 
-import android.os.Bundle;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollFragment;
 import chenyu.jokes.model.Data;

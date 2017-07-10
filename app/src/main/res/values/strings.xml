@@ -1,7 +1,16 @@
 <resources>
-  <string name="app_name">笑话趣图收集</string>
+  <string name="app_name">笑话趣图</string>
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="send_intent_title">分享到：</string>
+  <string name="blog_url">http://blog.csdn.net/kbkaaa</string>
+  <string name="blog">Blog</string>
+  <string name="version_number">版本号</string>
+  <string name="author">作者</string>
+  <string name="author_name">钟晨宇</string>
+  <string name="android_source">Android 源码</string>
+  <string name="android_github">https://github.com/zhongchenyu/jokes</string>
+  <string name="server_source">Server 源码</string>
+  <string name="server_github">https://github.com/zhongchenyu/jokes-laravel</string>
 </resources>

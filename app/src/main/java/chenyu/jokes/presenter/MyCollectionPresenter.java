@@ -5,7 +5,7 @@ import chenyu.jokes.app.App;
 import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.constant.AttitudeType;
 import chenyu.jokes.database.JokeDataBaseAPI;
-import chenyu.jokes.feature.MyCollection.MyCollectionActivity;
+import chenyu.jokes.feature.myCollection.MyCollectionActivity;
 import chenyu.jokes.model.JokeCollection;
 import chenyu.jokes.model.MyResponse;
 import java.util.ArrayList;

@@ -65,7 +65,7 @@
         android:layout_marginTop="16dp"/>
   </LinearLayout>
 
-  <LinearLayout
+  <!--LinearLayout
       android:layout_width="match_parent" android:layout_height="wrap_content"
       android:orientation="horizontal" android:layout_marginTop="8dp"
       android:background="@android:color/white">
@@ -76,10 +76,39 @@
         android:background="@drawable/selector_bg_corner" android:layout_marginTop="16dp"
         android:textColor="@android:color/white" android:textSize="16sp"
         android:layout_marginStart="16dp" android:layout_marginBottom="16dp"/>
+
     <TextView android:id="@+id/joke_collection"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:textSize="16sp" android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"/>
+  </LinearLayout-->
+  <LinearLayout android:id="@+id/layout_collection"
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:layout_marginTop="8dp"
+      android:background="@android:color/white"
+      android:padding="8dp" android:clickable="false" >
+    <ImageView android:id="@+id/img_collection"
+        android:layout_width="32sp" android:layout_height="32sp"
+        android:src="@drawable/ic_star_n" android:layout_gravity="center_vertical"/>
+    <TextView android:id="@+id/txt_collection"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="收藏"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
+  </LinearLayout>
+  <LinearLayout android:id="@+id/layout_about"
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:layout_marginTop="8dp"
+      android:background="@android:color/white"
+      android:padding="8dp" android:clickable="true">
+    <ImageView
+        android:layout_width="32sp" android:layout_height="32sp"
+        android:src="@drawable/ic_about" android:layout_gravity="center_vertical"/>
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="关于"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
   </LinearLayout>
 
 </LinearLayout>

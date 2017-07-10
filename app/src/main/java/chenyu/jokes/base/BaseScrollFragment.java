@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +107,6 @@ public abstract class BaseScrollFragment<Adapter extends BaseScrollAdapter, P ex
 
   @Override public void onItemsError(Throwable throwable) {
     Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-    Log.d("onItemError", throwable.getMessage());
   }
 
   public void onLoadMore() {

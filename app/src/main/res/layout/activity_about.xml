@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="chenyu.jokes.feature.about.AboutActivity"
+    android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar android:id="@+id/toolBar"
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:background="@color/baseColor" android:title=""
+      android:layout_alignParentTop="true">
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="关于" android:textColor="@android:color/white"
+        android:textSize="20sp"/>
+  </android.support.v7.widget.Toolbar>
+  <LinearLayout android:id="@+id/layout_version"
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:layout_marginTop="8dp"
+      android:background="@android:color/white"
+      android:padding="8dp" android:clickable="true">
+
+    <TextView
+        android:layout_width="80sp" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/version_number"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
+    <TextView android:id="@+id/version_name"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:layout_marginTop="8dp"
+      android:background="@android:color/white"
+      android:padding="8dp" android:clickable="true">
+    <TextView
+        android:layout_width="80sp" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/author"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/author_name"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical" android:autoLink="web"
+        android:enabled="true" android:textIsSelectable="true"
+        android:focusable="true" android:longClickable="true"/>
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:layout_marginTop="8dp"
+      android:background="@android:color/white"
+      android:padding="8dp" android:clickable="true">
+    <TextView
+        android:layout_width="80sp" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/blog"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/blog_url"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical" android:autoLink="web"
+        android:enabled="true" android:textIsSelectable="true"
+        android:focusable="true" android:longClickable="true"/>
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:layout_marginTop="8dp"
+      android:background="@android:color/white"
+      android:padding="8dp">
+    <TextView
+        android:layout_width="80sp" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/android_source"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="20sp" android:text="@string/android_github"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center_vertical" android:autoLink="web"
+        android:enabled="true" android:textIsSelectable="true"
+        android:focusable="true" android:longClickable="true"/>
+  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:padding="8dp" android:clickable="true">
+      <TextView
+          android:layout_width="80sp" android:layout_height="wrap_content"
+          android:textSize="20sp" android:text="@string/server_source"
+          android:layout_marginStart="8dp"
+          android:layout_gravity="center_vertical"/>
+      <TextView
+          android:layout_width="wrap_content" android:layout_height="wrap_content"
+          android:textSize="20sp" android:text="@string/server_github"
+          android:layout_marginStart="8dp"
+          android:layout_gravity="center_vertical" android:autoLink="web"
+          android:enabled="true" android:textIsSelectable="true"
+          android:focusable="true" android:longClickable="true"/>
+    </LinearLayout>
+
+</LinearLayout>

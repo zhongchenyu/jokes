@@ -3,6 +3,8 @@ package chenyu.jokes.feature.comment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,9 +27,12 @@ public class JokeCommentActivity
     extends BaseScrollActivity<CommentAdapter, CommentPresenter, Comment> {
   private final static String ARGUMENT_JOKE = "argument_joke";
   private Data joke;
+  private ActionBar actionBar;
   @BindView(R.id.content) TextView jokeContent;
   @BindView(R.id.send) ImageButton send;
   @BindView(R.id.inputComment) EditText inputComment;
+  @BindView(R.id.toolBar) Toolbar toolbar;
+
   private InputMethodManager inputMethodManager;
 
   public static void startActivity(Context context, Data joke) {
@@ -53,6 +58,8 @@ public class JokeCommentActivity
     getPresenter().setJokeId(getJokeId());
 
     inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+    initToolbar();
   }
 
   @Override protected void onResume() {
@@ -79,5 +86,16 @@ public class JokeCommentActivity
 
   public int getJokeId() {
     return joke.id;
+  }
+
+  private void initToolbar() {
+    toolbar.setNavigationIcon(R.drawable.ic_back_white_32);
+    setSupportActionBar(toolbar);
+    actionBar = getSupportActionBar();
+    if(actionBar != null) {
+      actionBar.setTitle("");
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setHomeButtonEnabled(true);
+    }
   }
 }

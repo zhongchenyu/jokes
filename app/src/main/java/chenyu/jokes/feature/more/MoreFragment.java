@@ -3,6 +3,7 @@ package chenyu.jokes.feature.more;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -20,27 +22,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chenyu.jokes.R;
 import chenyu.jokes.app.AccountManager;
-import chenyu.jokes.app.App;
-import chenyu.jokes.database.JokeDataBaseAPI;
-import chenyu.jokes.feature.MyCollection.MyCollectionActivity;
+import chenyu.jokes.feature.about.AboutActivity;
+import chenyu.jokes.feature.myCollection.MyCollectionActivity;
 import chenyu.jokes.model.Account;
 import chenyu.jokes.model.ErrorResponse;
-import chenyu.jokes.model.JokeCollection;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Token;
 import chenyu.jokes.model.User;
 import chenyu.jokes.presenter.MorePresenter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import nucleus.factory.RequiresPresenter;
 import nucleus.view.NucleusSupportFragment;
 import retrofit2.HttpException;
-import rx.functions.Action1;
-
-import static rx.android.schedulers.AndroidSchedulers.mainThread;
-import static rx.schedulers.Schedulers.io;
 
 @RequiresPresenter(MorePresenter.class)
 public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
@@ -52,8 +46,11 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
   @BindView(R.id.register) Button mBtnRegister;
   @BindView(R.id.notice) Button mBtnNotice;
   @BindView(R.id.notice_content) TextView mTxtNotice;
-  @BindView(R.id.get_collection) Button mBtnCollection;
-  @BindView(R.id.joke_collection) TextView mTxtCollection;
+  //@BindView(R.id.get_collection) Button mBtnCollection;
+  @BindView(R.id.layout_collection) LinearLayout mLayoutCollection;
+  @BindView(R.id.txt_collection) TextView mTxtCollection;
+  @BindView(R.id.img_collection) ImageView mImgCollection;
+  @BindView(R.id.layout_about) LinearLayout mLayoutAbout;
 
   private LocalBroadcastManager localBroadcastManager;
 
@@ -71,10 +68,13 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_more, container, false);
     ButterKnife.bind(this, view);
+    mLayoutCollection.setClickable(false);
     localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
     if (!TextUtils.isEmpty(AccountManager.create().getToken())) {
       getPresenter().getUserInfo();
     }
+
+
     return view;
   }
 
@@ -91,8 +91,9 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogin.setVisibility(View.INVISIBLE);
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
-    mBtnCollection.setEnabled(true);
-
+    mLayoutCollection.setClickable(true);
+    //mTxtCollection.setTextColor(ContextCompat.getColor(getContext(), R.color.baseColor));
+    mImgCollection.setColorFilter(ContextCompat.getColor(getContext(), R.color.baseColor));
     Intent intent = new Intent("chenyu.jokes.account.login");
     localBroadcastManager.sendBroadcast(intent);
   }
@@ -106,7 +107,9 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogin.setVisibility(View.INVISIBLE);
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
-    mBtnCollection.setEnabled(true);
+    mLayoutCollection.setClickable(true);
+    //mTxtCollection.setTextColor(ContextCompat.getColor(getContext(), R.color.baseColor));
+    mImgCollection.setColorFilter(ContextCompat.getColor(getContext(), R.color.baseColor));
   }
 
   public void onGetNoticeSuccess(Notice notice) {
@@ -132,7 +135,7 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
 
   }
 
-  @OnClick({R.id.login, R.id.logout, R.id.register, R.id.notice}) public void click(View view) {
+  @OnClick({R.id.login, R.id.logout, R.id.register, R.id.notice, R.id.layout_about}) public void click(View view) {
     switch (view.getId()) {
       case R.id.login:
         showLoginDialog();
@@ -144,7 +147,10 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         mBtnLogout.setVisibility(View.INVISIBLE);
         mBtnRegister.setVisibility(View.VISIBLE);
         //mBtnNotice.setEnabled(false);
-        mBtnCollection.setEnabled(false);
+        //mBtnCollection.setEnabled(false);
+        mLayoutCollection.setClickable(false);
+        //mTxtCollection.setTextColor(ContextCompat.getColor(getContext(), R.color.baseGrey));
+        mImgCollection.setColorFilter(ContextCompat.getColor(getContext(), R.color.baseGrey));
         mTxtName.setVisibility(View.INVISIBLE);
         mTxtEmail.setVisibility(View.INVISIBLE);
         //mTxtNotice.setText("");
@@ -157,6 +163,9 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         break;
       case R.id.notice:
         getPresenter().getNotice();
+        break;
+      case R.id.layout_about:
+        AboutActivity.startActivity(getContext());
         break;
     }
   }
@@ -227,7 +236,7 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     builder.show();
   }
 
-  @OnClick(R.id.get_collection) public void getCollection(View view) {
+  @OnClick(R.id.layout_collection) public void getCollection(View view) {
     MyCollectionActivity.startActivity(getContext());
   }
 }

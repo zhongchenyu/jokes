@@ -1,5 +1,6 @@
 package chenyu.jokes.feature.Joke;
 
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -46,28 +48,46 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
     holder.joke = mItems.get(position).getContent().toString();
     holder.jokeId = mItems.get(position).id;
 
-    holder.txtUp.setText("顶"+mItems.get(position).up_amount);
-    holder.txtDown.setText("踩"+mItems.get(position).down_amount);
-    holder.txtComment.setText("评论"+mItems.get(position).comment_amount);
-    holder.txtCollect.setText("收藏"+mItems.get(position).collect_amount);
+    holder.txtUp.setText(String.valueOf(mItems.get(position).up_amount));
+    holder.txtDown.setText(String.valueOf(mItems.get(position).down_amount));
+    holder.txtComment.setText(String.valueOf(mItems.get(position).comment_amount));
+    holder.txtCollect.setText(String.valueOf(mItems.get(position).collect_amount));
     switch (mItems.get(position).my_attitude) {
       case 0:
         holder.txtUp.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
         holder.txtDown.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+        holder.imgUp.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+        holder.imgDown.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
         break;
       case 1:
         holder.txtUp.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
         holder.txtDown.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+        holder.imgUp.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
+        holder.imgDown.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
         break;
       case -1:
         holder.txtUp.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
         holder.txtDown.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
+        holder.imgUp.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+        holder.imgDown.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
         break;
     }
     if (mItems.get(position).my_collected) {
       holder.txtCollect.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
+      //holder.imgCollect.setImageDrawable(ContextCompat.getDrawable(parent.getContext(), R.drawable.ic_star_p));
+      holder.imgCollect.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
     } else {
       holder.txtCollect.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+      //holder.imgCollect.setImageDrawable(ContextCompat.getDrawable(parent.getContext(), R.drawable.ic_star_n));
+      holder.imgCollect.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+    }
+
+    if(mItems.get(position).comment_amount == 0) {
+      holder.imgComment.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+      holder.txtComment.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
+    } else {
+      holder.imgComment.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
+      holder.txtComment.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
     }
   }
 
@@ -79,6 +99,11 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
     @BindView(R.id.down) public TextView txtDown;
     @BindView(R.id.comment) public TextView txtComment;
     @BindView(R.id.collect) public TextView txtCollect;
+    @BindView(R.id.ic_down) public ImageView imgDown;
+    @BindView(R.id.ic_collect) public ImageView imgCollect;
+    @BindView(R.id.ic_up) public ImageView imgUp;
+    @BindView(R.id.ic_comment) public ImageView imgComment;
+
     public String joke;
     private int jokeId;
     //private int position;
@@ -97,23 +122,30 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
               Gravity.BOTTOM, 0, 0);
     }
 
-    @OnClick({R.id.up, R.id.down, R.id.comment, R.id.collect}) public void onClick(View view) {
+    @OnClick({R.id.up, R.id.down, R.id.comment, R.id.collect, R.id.ic_up, R.id.ic_down, R.id.ic_collect, R.id.ic_comment})
+    public void onClick(View view) {
       if(TextUtils.isEmpty(AccountManager.create().getToken())) {
         Toast.makeText(itemView.getContext(), "需要先登录", Toast.LENGTH_SHORT).show();
         return;
       }
       switch (view.getId()) {
         case R.id.up:
-
+        case R.id.ic_up:
           jokeFragment.onAttitude(jokeId, getAdapterPosition(), AttitudeType.UP);
           break;
+
         case R.id.down:
+        case R.id.ic_down:
           jokeFragment.onAttitude(jokeId, getAdapterPosition(), AttitudeType.DOWN);
           break;
+
         case R.id.comment:
+        case R.id.ic_comment:
           JokeCommentActivity.startActivity(view.getContext(), mItems.get(getAdapterPosition()));
           break;
+
         case R.id.collect:
+        case R.id.ic_collect:
           jokeFragment.onAttitude(jokeId, getAdapterPosition(),AttitudeType.COLLECT);
           break;
       }

@@ -18,10 +18,6 @@ public abstract class BaseScrollAdapter<Model, VH extends RecyclerView.ViewHolde
   protected ViewGroup parent;
 
 
-  public BaseScrollAdapter(){
-
-  }
-
   public abstract int getLayout();
 
   @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,6 +28,7 @@ public abstract class BaseScrollAdapter<Model, VH extends RecyclerView.ViewHolde
   }
 
   protected abstract VH getViewHolder(View view) ;
+
   @Override public void onBindViewHolder(VH holder, int position){
     ButterKnife.bind(this,holder.itemView);
   }

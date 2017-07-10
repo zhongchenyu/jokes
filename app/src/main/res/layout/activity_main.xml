@@ -19,7 +19,7 @@
       android:layout_above="@+id/bottomBar" android:layout_below="@+id/toolBar"/>
 
   <com.roughike.bottombar.BottomBar android:id="@+id/bottomBar"
-      android:layout_width="match_parent" android:layout_height="48dp"
+      android:layout_width="match_parent" android:layout_height="56dp"
       android:background="@color/baseColor" app:bb_titleTextAppearance="@style/MyTextAppearance"
       app:bb_activeTabColor="@android:color/white" app:bb_inActiveTabColor="#888888"
       app:bb_tabXmlResource="@xml/bottombar_tabs" android:layout_alignParentBottom="true"

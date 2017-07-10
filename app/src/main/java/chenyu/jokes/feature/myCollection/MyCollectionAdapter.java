@@ -1,4 +1,4 @@
-package chenyu.jokes.feature.MyCollection;
+package chenyu.jokes.feature.myCollection;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,9 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chenyu.jokes.R;
 import chenyu.jokes.base.BaseScrollAdapter;
-import chenyu.jokes.base.BaseScrollPresenter;
 import chenyu.jokes.model.JokeCollection;
-import java.util.Collection;
 
 /**
  * Created by chenyu on 2017/5/17.

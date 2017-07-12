@@ -46,7 +46,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
   @BindView(R.id.register) Button mBtnRegister;
   @BindView(R.id.notice) Button mBtnNotice;
   @BindView(R.id.notice_content) TextView mTxtNotice;
-  //@BindView(R.id.get_collection) Button mBtnCollection;
   @BindView(R.id.layout_collection) LinearLayout mLayoutCollection;
   @BindView(R.id.txt_collection) TextView mTxtCollection;
   @BindView(R.id.img_collection) ImageView mImgCollection;
@@ -92,7 +91,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
     mLayoutCollection.setClickable(true);
-    //mTxtCollection.setTextColor(ContextCompat.getColor(getContext(), R.color.baseColor));
     mImgCollection.setColorFilter(ContextCompat.getColor(getContext(), R.color.baseColor));
     Intent intent = new Intent("chenyu.jokes.account.login");
     localBroadcastManager.sendBroadcast(intent);
@@ -108,7 +106,6 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
     mBtnLogout.setVisibility(View.VISIBLE);
     mBtnRegister.setVisibility(View.INVISIBLE);
     mLayoutCollection.setClickable(true);
-    //mTxtCollection.setTextColor(ContextCompat.getColor(getContext(), R.color.baseColor));
     mImgCollection.setColorFilter(ContextCompat.getColor(getContext(), R.color.baseColor));
   }
 
@@ -146,14 +143,10 @@ public class MoreFragment extends NucleusSupportFragment<MorePresenter> {
         mBtnLogin.setVisibility(View.VISIBLE);
         mBtnLogout.setVisibility(View.INVISIBLE);
         mBtnRegister.setVisibility(View.VISIBLE);
-        //mBtnNotice.setEnabled(false);
-        //mBtnCollection.setEnabled(false);
         mLayoutCollection.setClickable(false);
-        //mTxtCollection.setTextColor(ContextCompat.getColor(getContext(), R.color.baseGrey));
         mImgCollection.setColorFilter(ContextCompat.getColor(getContext(), R.color.baseGrey));
         mTxtName.setVisibility(View.INVISIBLE);
         mTxtEmail.setVisibility(View.INVISIBLE);
-        //mTxtNotice.setText("");
 
         Intent intent = new Intent("chenyu.jokes.account.logout");
         localBroadcastManager.sendBroadcast(intent);

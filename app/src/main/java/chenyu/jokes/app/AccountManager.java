@@ -1,6 +1,5 @@
 package chenyu.jokes.app;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import chenyu.jokes.model.Account;
 import chenyu.jokes.model.User;

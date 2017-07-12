@@ -61,13 +61,7 @@ public class CommentPresenter extends BaseScrollPresenter<JokeCommentActivity, C
           }
         });
   }
-/*
-  public void getComment(int jokeId, int page) {
-    mPage = page;
-    mJokeId = jokeId;
-    start(GET_COMMENT);
-  }
-*/
+
   public void setJokeId(int jokeId) {
     mJokeId = jokeId;
   }

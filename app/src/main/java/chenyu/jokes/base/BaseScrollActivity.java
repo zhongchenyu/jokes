@@ -69,7 +69,6 @@ public abstract class BaseScrollActivity<Adapter extends BaseScrollAdapter, P ex
             return;
           }
 
-          //int visibleItemCount = recyclerView.getChildCount();
           int totalItemCount = recyclerView.getAdapter().getItemCount();
           int lastVisibleItem =
               ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
@@ -79,7 +78,7 @@ public abstract class BaseScrollActivity<Adapter extends BaseScrollAdapter, P ex
               previousTotal = totalItemCount;
             }
           }
-          if (!loading && lastVisibleItem >= totalItemCount - 1) {//(totalItemCount - visibleItemCount) <= firstVisibleItem
+          if (!loading && lastVisibleItem >= totalItemCount - 1) {
 
             loading = true;
             currentPage++;

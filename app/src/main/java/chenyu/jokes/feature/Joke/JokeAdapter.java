@@ -74,11 +74,9 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
     }
     if (mItems.get(position).my_collected) {
       holder.txtCollect.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
-      //holder.imgCollect.setImageDrawable(ContextCompat.getDrawable(parent.getContext(), R.drawable.ic_star_p));
       holder.imgCollect.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseColor));
     } else {
       holder.txtCollect.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
-      //holder.imgCollect.setImageDrawable(ContextCompat.getDrawable(parent.getContext(), R.drawable.ic_star_n));
       holder.imgCollect.setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.baseGrey));
     }
 
@@ -106,7 +104,6 @@ public class JokeAdapter extends BaseScrollAdapter<Data, JokeAdapter.JokeViewHol
 
     public String joke;
     private int jokeId;
-    //private int position;
     private JokeFragment jokeFragment;
 
     public JokeViewHolder(View view) {

@@ -91,10 +91,6 @@ public class MainActivity extends NucleusAppCompatActivity {
   public ShareWindow getShareWindow() {
     return shareWindow;
   }
-/*
-  public IWXAPI getWXAPI() {
-    return api;
-  }*/
 
   private void replaceFragment(Fragment fragment) {
     fragmentManager.beginTransaction().replace(R.id.mainContent, fragment).commit();

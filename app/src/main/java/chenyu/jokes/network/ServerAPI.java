@@ -46,11 +46,21 @@ public interface ServerAPI {
       @Field("password") String password
   );
 
+  @FormUrlEncoded @POST("encrypted_register") Observable<Token> encryptedRegister(
+      @Field("name") String name,
+      @Field("email") String email,
+      @Field("password") String password
+  );
+
   @GET("login") Observable<Account> login(
       @Query("email") String email,
       @Query("password") String password
   );
 
+  @FormUrlEncoded @POST("encrypted_login") Observable<Account> encryptedLogin(
+      @Field("email") String email,
+      @Field("password") String password
+  );
 
   @GET("notices") Observable<Notice> getNotice(
       @Header("Authorization") String token

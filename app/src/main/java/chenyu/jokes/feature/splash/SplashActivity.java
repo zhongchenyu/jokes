@@ -3,6 +3,7 @@ package chenyu.jokes.feature.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import chenyu.jokes.R;
 import chenyu.jokes.feature.main.MainActivity;
+import chenyu.jokes.util.RSAUtil;
 
 public class SplashActivity extends AppCompatActivity {
   @BindView(R.id.logo) ImageView mImgLogo;

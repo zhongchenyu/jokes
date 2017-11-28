@@ -3,25 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <android.support.v7.widget.Toolbar android:id="@+id/toolBar"
-      android:layout_width="match_parent" android:layout_height="wrap_content"
-      android:background="@color/baseColor" android:title=""
-      android:layout_alignParentTop="true">
-    <TextView
+
+
+<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
+    android:layout_height="match_parent" ><!--android:layout_below="@+id/toolBar"-->
+
+  <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar android:id="@+id/toolBar"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@color/baseColor" android:title=""
+        android:layout_alignParentTop="true" app:layout_scrollFlags="scroll|enterAlways|snap">
+      <TextView
+          android:layout_width="wrap_content" android:layout_height="wrap_content"
+          android:text="@string/app_name" android:textColor="@android:color/white"
+          android:textSize="20sp"/>
+    </android.support.v7.widget.Toolbar>
+  </android.support.design.widget.AppBarLayout>
+
+  <!--android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+      android:layout_height="300dp" -->
+    <FrameLayout  android:id="@+id/mainContent"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar" app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@+id/toolBar"
+        /><!-- android:layout_below="@+id/toolBar"-->
+
+    <android.support.design.widget.FloatingActionButton android:id="@+id/go_up"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/app_name" android:textColor="@android:color/white"
-        android:textSize="20sp"/>
-  </android.support.v7.widget.Toolbar>
-
-
-  <FrameLayout  android:id="@+id/mainContent"
-      android:layout_width="match_parent" android:layout_height="match_parent"
-      android:layout_above="@+id/bottomBar" android:layout_below="@+id/toolBar"/>
-
+        android:src="@drawable/ic_action_goup" app:layout_scrollFlags="scroll|enterAlways|snap"
+        android:layout_gravity="bottom|end" android:layout_marginBottom="64dp"/>
+  <!--/android.support.v4.widget.NestedScrollView-->
   <com.roughike.bottombar.BottomBar android:id="@+id/bottomBar"
       android:layout_width="match_parent" android:layout_height="56dp"
       android:background="@color/baseColor" app:bb_titleTextAppearance="@style/MyTextAppearance"
       app:bb_activeTabColor="@android:color/white" app:bb_inActiveTabColor="#888888"
-      app:bb_tabXmlResource="@xml/bottombar_tabs" android:layout_alignParentBottom="true"
-      /> <!--app:bb_behavior="shifting"-->
+      app:bb_tabXmlResource="@xml/bottombar_tabs" android:layout_gravity="bottom"
+      app:bb_behavior="shy"/> <!--app:bb_behavior="shifting"  android:layout_alignParentBottom="true"-->
+</android.support.design.widget.CoordinatorLayout>
+
 </RelativeLayout>

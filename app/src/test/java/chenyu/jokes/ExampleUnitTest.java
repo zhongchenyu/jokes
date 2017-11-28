@@ -1,5 +1,6 @@
 package chenyu.jokes;
 
+import chenyu.jokes.util.Base64Util;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,5 +14,9 @@ public class ExampleUnitTest {
   @Test
   public void addition_isCorrect() throws Exception {
     assertEquals(4, 2 + 2);
+  }
+
+  @Test public void encode() {
+    new Base64Util().encode();
   }
 }

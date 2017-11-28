@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import android.util.Log;
+import chenyu.jokes.util.Base64Util;
+import chenyu.jokes.util.RSAUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +25,19 @@ public class ExampleInstrumentedTest {
     Context appContext = InstrumentationRegistry.getTargetContext();
 
     assertEquals("chenyu.jokes", appContext.getPackageName());
+  }
+  @Test
+  public void encode() throws Exception {
+    Context appContext = InstrumentationRegistry.getTargetContext();
+    String str = RSAUtil.base64Encrypted("abcdef");
+    //System.out.println(str);
+    //Log.d("debug",str);
+    throw new Exception(str);
+  }
+
+  @Test
+  public void base64() throws  Exception {
+    String str = Base64Util.encode();
+    throw new Exception(str);
   }
 }

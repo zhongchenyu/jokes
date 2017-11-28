@@ -8,6 +8,7 @@ import chenyu.jokes.model.Account;
 import chenyu.jokes.model.Notice;
 import chenyu.jokes.model.Token;
 import chenyu.jokes.model.User;
+import chenyu.jokes.util.RSAUtil;
 import nucleus.presenter.RxPresenter;
 import rx.Observable;
 import rx.functions.Action2;
@@ -33,7 +34,7 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
     restartableFirst(REGISTER,
         new Func0<Observable<Token>>() {
           @Override public Observable<Token> call() {
-            return App.getServerAPI().register(mName, mEmail, mPassword)
+            return App.getServerAPI().encryptedRegister(mName, mEmail, mPassword)
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
           }
         },
@@ -51,7 +52,7 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
     restartableFirst(LOGIN,
         new Func0<Observable<Account>>() {
           @Override public Observable<Account> call() {
-            return App.getServerAPI().login(mEmail, mPassword)
+            return App.getServerAPI().encryptedLogin(mEmail, mPassword)
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
           }
         },
@@ -112,13 +113,13 @@ public class MorePresenter extends RxPresenter<MoreFragment> {
   public void register(String name, String email, String password) {
     mName = name;
     mEmail = email;
-    mPassword = password;
+    mPassword = RSAUtil.base64Encrypted(password);
     start(REGISTER);
   }
 
   public void login(String email, String password) {
     mEmail = email;
-    mPassword = password;
+    mPassword = RSAUtil.base64Encrypted(password);
     start(LOGIN);
   }
 
